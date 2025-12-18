@@ -1,0 +1,3672 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Krishi Mitra</title>
+  <style>
+    /* Enhanced CSS with Modern Design */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&display=swap');
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%);
+      --secondary-gradient: linear-gradient(135deg, #ffcc00 0%, #ffdb4d 100%);
+      --accent-gradient: linear-gradient(135deg, #1e90ff 0%, #4da6ff 100%);
+      --danger-gradient: linear-gradient(135deg, #ff4d4d 0%, #ff6666 100%);
+      --dark-bg: #1a1a2e;
+      --light-bg: #f8f9fa;
+      --surface-color: #ffffff;
+      --text-primary: #2d3436;
+      --text-secondary: #636e72;
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --border-radius: 16px;
+      --border-radius-sm: 10px;
+      --transition: all 0.3s ease;
+      
+      /* Keep original variables for compatibility */
+      --primary-color: #3cb371;
+      --primary-dark: #2e8b57;
+      --secondary-color: #ffcc00;
+      --accent-color: #1e90ff;
+      --background-color: #f0f4f8;
+      --border-color: #e0e6ed;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --success-color: #28a745;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--light-bg);
+      color: var(--text-primary);
+      font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Login Page Styles (from index.html) */
+    .login-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: var(--light-bg);
+    }
+
+    .login-container {
+      max-width: 400px;
+      width: 90%;
+      padding: 2rem;
+      background-color: var(--surface-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-placeholder {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .form-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .language-toggle {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .language-toggle button {
+      width: auto;
+      padding: 0.5rem 1rem;
+      background-color: var(--secondary-color);
+      color: #333;
+    }
+
+    .error-message {
+      color: var(--danger-color);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .success-message {
+      color: var(--success-color);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    /* Main Application Container */
+    .app-container {
+      display: none;
+    }
+
+    .shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.5rem;
+    }
+
+    /* Header with Dynamic Stats */
+    .topbar {
+      background: var(--primary-gradient);
+      border-radius: var(--border-radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topbar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--secondary-gradient);
+    }
+
+    .app-logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 1rem;
+    }
+
+    .app-logo-placeholder {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    header h1 { 
+      margin: 0; 
+      font-weight: 800;
+      font-size: 2.2rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    header p { 
+      margin: 0.5rem 0 0 0; 
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .stat-icon {
+      background: rgba(255,255,255,0.2);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Navigation with Active Indicator */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--surface-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+    }
+
+    nav a {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a.active {
+      background: var(--primary-gradient);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 4px;
+      background: var(--secondary-gradient);
+      border-radius: 2px;
+    }
+
+    nav a:hover:not(.active) {
+      background: rgba(60, 179, 113, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Page Content */
+    .page-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-content h2 {
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Dashboard Enhancements */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .widget-card {
+      background: var(--surface-color);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .widget-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .widget-card h3 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    /* Real-time Weather Widget */
+    .weather-widget {
+      background: linear-gradient(135deg, #4da6ff 0%, #1e90ff 100%);
+      color: white;
+    }
+
+    .weather-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .temperature {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .weather-details {
+      text-align: right;
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      margin: 1.5rem 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-gradient);
+      border-radius: 5px;
+      transition: width 1s ease;
+    }
+
+    /* Charts */
+    .chart-container {
+      height: 250px;
+      margin: 1.5rem 0;
+    }
+
+    /* Interactive Elements */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      background: var(--primary-gradient);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-gradient);
+      color: var(--text-primary);
+    }
+
+    .btn-danger {
+      background: var(--danger-gradient);
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--border-radius-sm);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #3cb371;
+      box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.1);
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: var(--border-radius-sm);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface-color);
+    }
+
+    .data-table th {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .data-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .data-table tr:hover {
+      background: rgba(60, 179, 113, 0.05);
+    }
+
+    /* Alert System */
+    .alert {
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius-sm);
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .alert-warning {
+      background: #fff3cd;
+      color: #856404;
+      border-left: 4px solid #ffc107;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border-left: 4px solid #17a2b8;
+    }
+
+    .alert-danger {
+      background: #f8d7da;
+      color: #721c24;
+      border-left: 4px solid #dc3545;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border-left: 4px solid #28a745;
+    }
+
+    /* AI Assistant Chat Interface */
+    .chat-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chat-window {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      background: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: var(--border-radius-sm);
+      max-width: 80%;
+    }
+
+    .message.user {
+      background: var(--primary-gradient);
+      color: white;
+      margin-left: auto;
+    }
+
+    .message.ai {
+      background: white;
+      border: 1px solid #e0e0e0;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    /* Loading States */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3cb371;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Logout button */
+    .logout-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--danger-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .shell { padding: 0.5rem; }
+      .topbar { padding: 1rem; }
+      header h1 { font-size: 1.8rem; }
+      .stats-bar { gap: 1rem; }
+      nav { gap: 0.5rem; }
+      nav a { padding: 0.6rem 1rem; font-size: 0.9rem; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Keep original styles from index.html for compatibility */
+    .marquee-box {
+      background: #fff3cd;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .fact-box {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 5px solid #ffcc00;
+      background: #fffaf0;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .quick-links a {
+      padding: 10px 20px;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-btn, .apply-btn {
+      padding: 0.5rem 1rem;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .contact-btn:hover, .apply-btn:hover {
+      background: #1c7ed6;
+    }
+
+    .detection-results {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+
+    .detection-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-left: 4px solid var(--primary-color);
+      background-color: white;
+      border-radius: 4px;
+    }
+
+    .detection-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .detection-confidence {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .detection-recommendation {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .detection-severity-low {
+      border-left-color: var(--success-color);
+    }
+
+    .detection-severity-medium {
+      border-left-color: var(--warning-color);
+    }
+
+    .detection-severity-high {
+      border-left-color: var(--danger-color);
+    }
+
+    .community-post {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .community-post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .post-author {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .post-time {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .crop-cycle-tracker {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .crop-calculator {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calculator-result {
+      margin-top: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* NEW FEATURES STYLES from index.html */
+    .crop-rotation-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .rotation-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .rotation-card h3 {
+      margin-bottom: 15px;
+      color: var(--primary-dark);
+    }
+    
+    .rotation-schedule {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .season-box {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f8f9fa;
+    }
+    
+    .season-box.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .soil-health-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .soil-metric {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    
+    .soil-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .soil-status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .status-good {
+      background: #d4edda;
+      color: var(--success-color);
+    }
+    
+    .status-fair {
+      background: #fff3cd;
+      color: var(--warning-color);
+    }
+    
+    .status-poor {
+      background: #f8d7da;
+      color: var(--danger-color);
+    }
+    
+    .irrigation-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .irrigation-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .water-level {
+      height: 20px;
+      background: #e9ecef;
+      border-radius: 10px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    
+    .water-fill {
+      height: 100%;
+      background: #1e90ff;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .equipment-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .equipment-image {
+      height: 150px;
+      background: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    
+    .equipment-body {
+      padding: 15px;
+    }
+    
+    .equipment-price {
+      font-weight: bold;
+      color: var(--primary-dark);
+      margin: 10px 0;
+    }
+    
+    .payment-options {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .payment-option {
+      flex: 1;
+      min-width: 120px;
+      padding: 15px;
+      text-align: center;
+      background: white;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .payment-option:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .payment-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    
+    .diary-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      margin: 20px 0;
+    }
+    
+    .diary-entry {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .diary-date {
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
+    
+    .diary-content {
+      margin-top: 5px;
+    }
+    
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .resource-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .resource-image {
+      height: 150px;
+      background: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    
+    .resource-body {
+      padding: 15px;
+    }
+    
+    .resource-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .resource-duration {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Switch styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: #3cb371;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    
+    .badge[data-quality="premium"] {
+      background: gold;
+      color: black;
+    }
+    
+    .badge[data-quality="grade-a"] {
+      background: silver;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Page from index.html -->
+  <div id="loginPage" class="login-page">
+    <div class="login-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">🌱</div>
+        <h1 id="headerTitle">Smart Krishi Mitra</h1>
+        <p id="headerTagline" class="tagline">Digital companion: Seed → Harvest → Market</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username" id="usernameLabel">Username or Phone</label>
+          <input type="text" id="username" name="username" required>
+          <div class="error-message" id="usernameError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" id="passwordLabel">Password</label>
+          <input type="password" id="password" name="password" required>
+          <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <button type="submit" id="loginButton">Login</button>
+      </form>
+
+      <div class="form-footer">
+        <p id="noAccount">Don't have an account? <a href="#" id="registerLink">Register here</a></p>
+        <p id="forgotPassword"><a href="#" id="forgotPasswordLink">Forgot your password?</a></p>
+      </div>
+
+      <div class="language-toggle">
+        <button id="langBtn" onclick="toggleLanguage()">मराठी</button>
+      </div>
+    </div>
+
+    <!-- Registration Form (Hidden by default) -->
+    <div id="registrationContainer" class="login-container" style="display: none;">
+      <div class="logo-container">
+        <div class="logo-placeholder">🌱</div>
+        <h1 id="registerTitle">Create Account</h1>
+        <p id="registerTagline" class="tagline">Join Smart Krishi Mitra today</p>
+      </div>
+
+      <form id="registrationForm">
+        <div class="form-group">
+          <label for="fullName" id="fullNameLabel">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required>
+          <div class="error-message" id="fullNameError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" id="phoneLabel">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+          <div class="error-message" id="phoneError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" id="emailLabel">Email (Optional)</label>
+          <input type="email" id="email" name="email">
+          <div class="error-message" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="location" id="locationLabel">Location/Village</label>
+          <input type="text" id="location" name="location" required>
+          <div class="error-message" id="locationError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword" id="regPasswordLabel">Password</label>
+          <input type="password" id="regPassword" name="regPassword" required>
+          <div class="error-message" id="regPasswordError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" id="confirmPasswordLabel">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
+          <div class="error-message" id="confirmPasswordError"></div>
+        </div>
+
+        <button type="submit" id="registerButton">Create Account</button>
+      </form>
+
+      <div class="form-footer">
+        <p id="haveAccount">Already have an account? <a href="#" id="loginLink">Login here</a></p>
+      </div>
+
+      <div class="language-toggle">
+        <button id="regLangBtn" onclick="toggleLanguage()">मराठी</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application from new.html with content from index.html -->
+  <div id="appContainer" class="app-container">
+    <div class="shell">
+      <!-- Enhanced Header with Real-time Stats -->
+      <div class="topbar">
+        <div class="app-logo-container">
+          <div class="app-logo-placeholder">🌾</div>
+          <div>
+            <h1 id="appHeaderTitle">Smart Krishi Mitra</h1>
+            <p id="appHeaderTagline">Digital companion: Seed → Harvest → Market</p>
+          </div>
+        </div>
+        
+        <!-- Language Toggle and Logout -->
+        <div style="position: absolute; top: 1.5rem; right: 2rem;">
+          <button id="appLangBtn" class="btn btn-secondary" onclick="toggleLanguage()">मराठी</button>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <!-- Real-time Stats Bar -->
+        <div class="stats-bar" id="statsBar">
+          <div class="stat-item">
+            <div class="stat-icon">🌡️</div>
+            <div>
+              <div id="tempStat">--°C</div>
+              <small>Temperature</small>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">💧</div>
+            <div>
+              <div id="humidityStat">--%</div>
+              <small>Humidity</small>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">📈</div>
+            <div>
+              <div id="priceStat">-- ₹/q</div>
+              <small>Sugarcane Price</small>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">⚡</div>
+            <div>
+              <div id="iotStat">0/0</div>
+              <small>IoT Devices</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enhanced Navigation from index.html with all features -->
+      <nav id="mainNav">
+        <a data-key="dashboard" onclick="showPage('dashboard', this)" class="active">Dashboard</a>
+        <a data-key="marketplace" onclick="showPage('marketplace', this)">Marketplace</a>
+        <a data-key="community" onclick="showPage('community', this)">Community</a>
+        <a data-key="storage" onclick="showPage('storage', this)">Storage</a>
+        <a data-key="govt" onclick="showPage('govt', this)">Govt Schemes</a>
+        <a data-key="planner" onclick="showPage('planner', this)">Planner</a>
+        <a data-key="assistant" onclick="showPage('assistant', this)">AI Assistant</a>
+        <a data-key="camera" onclick="showPage('camera', this)">Camera</a>
+        <a data-key="weather" onclick="showPage('weather', this)">Weather</a>
+        <a data-key="calculator" onclick="showPage('calculator', this)">Calculator</a>
+        <!-- NEW NAVIGATION ITEMS from index.html -->
+        <a data-key="cropRotation" onclick="showPage('cropRotation', this)">Crop Rotation</a>
+        <a data-key="soilHealth" onclick="showPage('soilHealth', this)">Soil Health</a>
+        <a data-key="irrigation" onclick="showPage('irrigation', this)">Smart Irrigation</a>
+        <a data-key="equipment" onclick="showPage('equipment', this)">Equipment Rental</a>
+        <a data-key="payments" onclick="showPage('payments', this)">Digital Payments</a>
+        <a data-key="diary" onclick="showPage('diary', this)">Farm Diary</a>
+        <a data-key="training" onclick="showPage('training', this)">Training</a>
+      </nav>
+
+      <!-- DASHBOARD from index.html with new.html enhancements -->
+      <section id="dashboard" class="page-content active">
+        <h2 id="dashboardTitle">🌾 Smart Farming Dashboard</h2>
+        
+        <!-- Alert System -->
+        <div class="alert alert-warning" id="weatherAlert">
+          <span>⚠️</span>
+          <div id="alertContent">Loading alerts...</div>
+        </div>
+        
+        <div class="dashboard-grid">
+          <!-- Weather Widget -->
+          <div class="widget-card weather-widget">
+            <h3 id="climateTitle">Current Weather</h3>
+            <div class="weather-info">
+              <div>
+                <div class="temperature" id="currentTemp">--°C</div>
+                <div id="weatherCondition">--</div>
+              </div>
+              <div class="weather-details">
+                <div>💧 <span id="currentHumidity">--%</span></div>
+                <div>🌬️ <span id="currentWind">-- km/h</span></div>
+                <div>🌅 <span id="sunriseTime">--:--</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Crop Health Widget -->
+          <div class="widget-card">
+            <h3 id="priceAlertTitle">Crop Health Status</h3>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Growth Stage</span>
+                <span id="growthPercent">--%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="growthProgress" style="width: 65%"></div>
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Soil Moisture</span>
+                <span id="soilMoisture">--%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 72%; background: #4da6ff;"></div>
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Nutrient Level</span>
+                <span id="nutrientLevel">--%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 85%; background: #ffcc00;"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Market Insights Widget -->
+          <div class="widget-card">
+            <h3>📈 Market Insights</h3>
+            <div id="marketChart" class="chart-container"></div>
+            <p id="marketPrediction">Loading market data...</p>
+          </div>
+          
+          <!-- Quick Actions Widget -->
+          <div class="widget-card">
+            <h3 id="taskReminderTitle">⚡ Quick Actions</h3>
+            <div style="display: grid; gap: 10px; margin-top: 1rem;">
+              <button class="btn" onclick="showPage('camera', this)">
+                📸 Scan Crop Disease
+              </button>
+              <button class="btn btn-secondary" onclick="showPage('planner', this)">
+                📅 View Farming Schedule
+              </button>
+              <button class="btn" onclick="showPage('assistant', this)">
+                🤖 Ask AI Assistant
+              </button>
+              <button class="btn btn-secondary" onclick="showPage('calculator', this)">
+                🧮 Calculator
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Crop Cycle Tracker from index.html -->
+        <div class="crop-cycle-tracker">
+          <h2 id="cropCycleTitle">🌱 Your Sugarcane Crop Cycle</h2>
+          <div class="progress-labels">
+            <span id="progressStart">Planting</span>
+            <span id="progressCurrent">65% Complete</span>
+            <span id="progressEnd">Harvest</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 65%;"></div>
+          </div>
+          <p id="cycleEstimate">Estimated harvest: 45 days remaining</p>
+        </div>
+
+        <div class="marquee-box">
+          <marquee behavior="scroll" direction="left" scrollamount="4" id="marqueeText">
+            🌱 Govt announces subsidy on organic fertilizers • 🚜 New high-yielding sugarcane hybrid released (Co 0238) • 💸 Sugarcane Fair and Remunerative Price (FRP) increased this year
+          </marquee>
+        </div>
+
+        <div class="fact-box">
+          <h3 id="didYouKnowTitle">💡 Did you know?</h3>
+          <p id="factBox"></p>
+        </div>
+
+        <div class="quick-links">
+          <a id="qlMarket" onclick="showPage('marketplace', document.querySelector('nav a[onclick*=\'marketplace\']'))" style="background:#28a745;">🛒 Marketplace</a>
+          <a id="qlGovt" onclick="showPage('govt', document.querySelector('nav a[onclick*=\'govt\']'))" style="background:#ffc107; color:#333;">📑 Govt Schemes</a>
+          <a id="qlAssistant" onclick="showPage('assistant', document.querySelector('nav a[onclick*=\'assistant\']'))" style="background:#17a2b8;">🤖 AI Assistant</a>
+          <a id="qlCalculator" onclick="showPage('calculator', document.querySelector('nav a[onclick*=\'calculator\']'))" style="background:#6f42c1;">🧮 Calculator</a>
+        </div>
+        
+        <!-- NEW DASHBOARD WIDGETS from index.html -->
+        <div class="dashboard-grid" style="margin-top: 30px;">
+          <div class="widget-card" style="background:#e3f2fd;">
+            <h2>🌾 Crop Rotation</h2>
+            <p>Next rotation: Soybean</p>
+            <p style="margin-top:10px; font-size:0.9rem;">Due in 15 days</p>
+            <button onclick="showPage('cropRotation', document.querySelector('nav a[onclick*=\'cropRotation\']'))" style="margin-top:10px; background:#1e90ff;">View Plan</button>
+          </div>
+          
+          <div class="widget-card" style="background:#e8f5e9;">
+            <h2>🌱 Soil Health</h2>
+            <p>Nitrogen: Optimal</p>
+            <p>pH: 6.8 (Good)</p>
+            <button onclick="showPage('soilHealth', document.querySelector('nav a[onclick*=\'soilHealth\']'))" style="margin-top:10px; background:#2e8b57;">Check Details</button>
+          </div>
+          
+          <div class="widget-card" style="background:#fff3cd;">
+            <h2>💧 Irrigation Status</h2>
+            <p>Next irrigation: Tomorrow</p>
+            <p>Water level: 75%</p>
+            <button onclick="showPage('irrigation', document.querySelector('nav a[onclick*=\'irrigation\']'))" style="margin-top:10px; background:#ffc107; color:#333;">Manage</button>
+          </div>
+          
+          <div class="widget-card" style="background:#f3e5f5;">
+            <h2>🔧 Equipment</h2>
+            <p>Tractor available</p>
+            <p>Harvester booked</p>
+            <button onclick="showPage('equipment', document.querySelector('nav a[onclick*=\'equipment\']'))" style="margin-top:10px; background:#6f42c1;">Rent Now</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKETPLACE from index.html -->
+      <section id="marketplace" class="page-content">
+        <h2 id="marketListingsTitle">Sugarcane Listings</h2>
+
+        <div class="alert alert-success">
+          <span>✅</span>
+          <span id="marketAlert">Best time to sell: Prices expected to rise next week</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-key="market_col_crop">Crop</th>
+                <th data-key="market_col_qty">Quantity</th>
+                <th data-key="market_col_price">Price (₹/quintal)</th>
+                <th data-key="market_col_seller">Seller</th>
+                <th data-key="market_col_contact">Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sugarcane (Co 0238)</td>
+                <td>1000 kg</td>
+                <td>3200</td>
+                <td>Farmer A</td>
+                <td><button class="contact-btn" onclick="contactSeller('Farmer A')">📞 Contact</button></td>
+              </tr>
+              <tr>
+                <td>Sugarcane (Ratoon Crop)</td>
+                <td>800 kg</td>
+                <td>3150</td>
+                <td>Farmer C</td>
+                <td><button class="contact-btn" onclick="contactSeller('Farmer C')">📞 Contact</button></td>
+              </tr>
+              <tr>
+                <td>Organic Sugarcane</td>
+                <td>1200 kg</td>
+                <td>3500</td>
+                <td>Farmer D</td>
+                <td><button class="contact-btn" onclick="contactSeller('Farmer D')">📞 Contact</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="pricePredTitle">📊 Price Prediction</h2>
+        <p id="pricePredText">Based on current trends, here are predicted prices:</p>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-key="market_col_crop">Crop</th>
+                <th data-key="market_col_current">Current Price</th>
+                <th data-key="market_col_predict">Predicted Price (Next Month)</th>
+                <th data-key="market_col_trend">Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sugarcane</td>
+                <td>₹3200</td>
+                <td>₹3300</td>
+                <td style="color:var(--success-color);">↑ Rising</td>
+              </tr>
+              <tr>
+                <td>Organic Sugarcane</td>
+                <td>₹3500</td>
+                <td>₹3650</td>
+                <td style="color:var(--success-color);">↑ Rising</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="widget-card" style="margin-top: 30px;">
+          <h3 id="sellYourCropTitle">Sell Your Crop</h3>
+          <form id="sellForm" onsubmit="event.preventDefault(); listYourCrop();">
+            <input type="text" id="cropType" class="form-control" placeholder="Crop Type" required>
+            <input type="number" id="cropQuantity" class="form-control" placeholder="Quantity (kg)" required>
+            <input type="number" id="cropPrice" class="form-control" placeholder="Expected Price (₹/quintal)" value="3250">
+            <input type="text" id="yourContact" class="form-control" placeholder="Your Contact Number">
+            <button type="submit" class="btn">List My Crop</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- COMMUNITY from index.html -->
+      <section id="community" class="page-content">
+        <h2 id="communityTitle">Farmer Community</h2>
+
+        <div class="widget-card">
+          <h3>Ask a Question</h3>
+          <textarea id="newQuestion" class="form-control" placeholder="Ask your farming question..."></textarea>
+          <button class="btn" onclick="postQuestion()">Post Question</button>
+        </div>
+
+        <div id="communityPosts">
+          <div class="community-post">
+            <div class="community-post-header">
+              <span class="post-author">Farmer A</span>
+              <span class="post-time">2 hours ago</span>
+            </div>
+            <p>Best time for irrigating sugarcane during summer?</p>
+            <div class="community-post" style="margin-left: 20px; background: #f8f9fa;">
+              <div class="community-post-header">
+                <span class="post-author">Expert</span>
+                <span class="post-time">1 hour ago</span>
+              </div>
+              <p>Early morning or late evening is best to reduce water evaporation. Avoid midday irrigation.</p>
+            </div>
+          </div>
+
+          <div class="community-post">
+            <div class="community-post-header">
+              <span class="post-author">Farmer B</span>
+              <span class="post-time">5 hours ago</span>
+            </div>
+            <p>How to manage Sugarcane Red Rot disease?</p>
+          </div>
+
+          <div class="community-post">
+            <div class="community-post-header">
+              <span class="post-author">Farmer C</span>
+              <span class="post-time">1 day ago</span>
+            </div>
+            <p>Any subsidy for drip irrigation in Maharashtra?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STORAGE from index.html -->
+      <section id="storage" class="page-content">
+        <h2 id="storageAvailableTitle">Available Storage</h2>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Facility</th>
+                <th>Capacity</th>
+                <th>Available</th>
+                <th>Rent (₹/month)</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Satara</td>
+                <td>Cold Storage</td>
+                <td>1000 MT</td>
+                <td>300 MT</td>
+                <td>1500</td>
+                <td><button class="contact-btn" onclick="contactStorage('Satara Cold Storage')">📞 Book</button></td>
+              </tr>
+              <tr>
+                <td>Pune</td>
+                <td>Warehouse</td>
+                <td>500 MT</td>
+                <td>200 MT</td>
+                <td>1200</td>
+                <td><button class="contact-btn" onclick="contactStorage('Pune Warehouse')">📞 Book</button></td>
+              </tr>
+              <tr>
+                <td>Kolhapur</td>
+                <td>Cold Storage</td>
+                <td>800 MT</td>
+                <td>500 MT</td>
+                <td>1400</td>
+                <td><button class="contact-btn" onclick="contactStorage('Kolhapur Cold Storage')">📞 Book</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="storageLogisticsTitle">Logistics Partners</h2>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Vehicle Type</th>
+                <th>Capacity</th>
+                <th>Rate (₹/km)</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Green Transport</td>
+                <td>Truck</td>
+                <td>10 MT</td>
+                <td>15</td>
+                <td><button class="contact-btn" onclick="contactLogistics('Green Transport')">📞 Book</button></td>
+              </tr>
+              <tr>
+                <td>Agri Logistics</td>
+                <td>Trailer</td>
+                <td>20 MT</td>
+                <td>25</td>
+                <td><button class="contact-btn" onclick="contactLogistics('Agri Logistics')">📞 Book</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- GOVT SCHEMES from index.html -->
+      <section id="govt" class="page-content">
+        <h2 id="govtSchemesTitle">Government Schemes</h2>
+
+        <div class="alert alert-success">
+          <span>✅</span>
+          <span id="schemeAlert">New: 80% subsidy on solar pumps for small farmers</span>
+        </div>
+
+        <div class="widget-card">
+          <ul id="govtSchemesList">
+            <li style="margin-bottom: 10px;">
+              <strong>PM-Kisan Samman Nidhi</strong> - ₹6000/year direct benefit
+              <button class="apply-btn" onclick="applyScheme('PM-Kisan')">Apply Now</button>
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong>Crop Insurance (PMFBY)</strong> - Premium: 1.5-2%
+              <button class="apply-btn" onclick="applyScheme('PMFBY')">Apply Now</button>
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong>Subsidy for Drip Irrigation</strong> - Up to 90% subsidy
+              <button class="apply-btn" onclick="applyScheme('Drip Irrigation')">Apply Now</button>
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong>Soil Health Card</strong> - Free soil testing
+              <button class="apply-btn" onclick="applyScheme('Soil Health Card')">Apply Now</button>
+            </li>
+          </ul>
+        </div>
+
+        <h2 id="govtLoansTitle">Loan Information</h2>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Bank</th>
+                <th>Loan Type</th>
+                <th>Interest Rate</th>
+                <th>Eligibility</th>
+                <th>Apply</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SBI</td>
+                <td>Kisan Credit Card</td>
+                <td>7%</td>
+                <td>Small & marginal farmers</td>
+                <td><button class="apply-btn" onclick="applyLoan('SBI KCC')">Apply</button></td>
+              </tr>
+              <tr>
+                <td>PNB</td>
+                <td>Agriculture Loan</td>
+                <td>8%</td>
+                <td>All farmers with land records</td>
+                <td><button class="apply-btn" onclick="applyLoan('PNB Agri Loan')">Apply</button></td>
+              </tr>
+              <tr>
+                <td>NABARD</td>
+                <td>Micro Irrigation</td>
+                <td>6%</td>
+                <td>Farmers adopting drip/sprinkler</td>
+                <td><button class="apply-btn" onclick="applyLoan('NABARD Irrigation')">Apply</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PLANNER from index.html -->
+      <section id="planner" class="page-content">
+        <h2 id="plannerTitle">Planner — Sugarcane Cultivation</h2>
+
+        <div class="alert alert-warning">
+          <span>⚠️</span>
+          <span id="plannerAlert">Next recommended action: Nitrogen top-dressing (Due in 5 days)</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-key="planner_stage">Stage</th>
+                <th data-key="planner_timeline">Timeline</th>
+                <th data-key="planner_activity">Activity</th>
+                <th data-key="planner_key_focus">Key Focus</th>
+                <th data-key="planner_status">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Land Prep (Adsali)</td>
+                <td>July–Aug</td>
+                <td>Deep plowing, trench forming, base fertilizer (FYM, P, K)</td>
+                <td>Soil quality & drainage</td>
+                <td><span style="color:var(--success-color);">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Planting</td>
+                <td>Aug–Sep</td>
+                <td>Plant setts (3-bud) in trenches, light irrigation, immediate weeding</td>
+                <td>Setts treatment (fungicide)</td>
+                <td><span style="color:var(--success-color);">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Tiller Development</td>
+                <td>Nov–Feb</td>
+                <td>Earthing-up, gap filling, Nitrogen fertilizer top-up (Urea)</td>
+                <td>Pest management (borers)</td>
+                <td><span style="color:var(--warning-color);">⏳ In Progress</span></td>
+              </tr>
+              <tr>
+                <td>Grand Growth</td>
+                <td>March–June</td>
+                <td>Heavy irrigation (critical period), detrashing (removing dry leaves)</td>
+                <td>Water stress & lodging prevention</td>
+                <td><span style="color:var(--text-secondary);">⌛ Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Maturity & Harvest</td>
+                <td>Sep–Nov (Next Year)</td>
+                <td>Stop irrigation 4-6 weeks before harvest, test brix level</td>
+                <td>High sugar content & yield</td>
+                <td><span style="color:var(--text-secondary);">⌛ Upcoming</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="widget-card" style="margin-top: 30px;">
+          <h3>Add Custom Task</h3>
+          <input type="text" id="customTask" class="form-control" placeholder="Task description">
+          <input type="date" id="taskDate" class="form-control">
+          <button class="btn" onclick="addCustomTask()">Add Task</button>
+        </div>
+      </section>
+
+      <!-- AI ASSISTANT from index.html with chat interface -->
+      <section id="assistant" class="page-content">
+        <h2 id="assistantTitle">🤖 Ask the Assistant</h2>
+
+        <div class="quick-links" style="margin-bottom: 20px;">
+          <button onclick="quickQuestion('sugarcane price')" style="background: var(--secondary-color); color: #333;">💰 Price</button>
+          <button onclick="quickQuestion('sugarcane diseases')" style="background: var(--danger-color);">🦠 Diseases</button>
+          <button onclick="quickQuestion('fertilizer schedule')" style="background: var(--primary-color);">🧪 Fertilizer</button>
+          <button onclick="quickQuestion('irrigation tips')" style="background: var(--accent-color);">💧 Irrigation</button>
+        </div>
+
+        <div class="chat-container">
+          <div class="chat-window" id="chatWindow">
+            <!-- Messages will appear here -->
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="aiQuestion" class="form-control" placeholder="e.g. When to harvest sugarcane?" onkeypress="if(event.key === 'Enter') askAssistant()">
+            <button class="btn" onclick="askAssistant()" id="aiButton">Get Answer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAMERA from index.html -->
+      <section id="camera" class="page-content">
+        <h2 id="cameraTitle">Sugarcane Health Detection</h2>
+        <p id="cameraDescription">Capture or upload images of your sugarcane crop for AI-powered disease detection and health analysis.</p>
+
+        <div class="widget-card">
+          <h3>Upload Crop Image</h3>
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="flex: 1;">
+              <div id="cameraPreview" style="width: 100%; height: 300px; background: #f0f0f0; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                  <div style="font-size: 4rem;">🌱</div>
+                  <p>No image selected</p>
+                </div>
+              </div>
+            </div>
+            <div style="flex: 1;">
+              <input type="file" id="cropImage" class="form-control" accept="image/*" capture="camera" onchange="previewImage(event)">
+              <button class="btn" onclick="analyzeImage()" style="margin-top: 1rem; width: 100%;" id="cameraButton">📁 Upload & Analyze</button>
+              
+              <div id="analysisResult" class="detection-results" style="margin-top: 1.5rem;">
+                <!-- Detection results will appear here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <h3>Detection Capabilities</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; background: #e8f5e8; border-radius: 8px;">
+              <h4>🦠 Diseases</h4>
+              <p>Red Rot, Smut, Wilt, Leaf Scald</p>
+            </div>
+            <div style="padding: 15px; background: #fff3cd; border-radius: 8px;">
+              <h4>🐛 Pests</h4>
+              <p>Stem Borer, Woolly Aphid, White Grub</p>
+            </div>
+            <div style="padding: 15px; background: #e3f2fd; border-radius: 8px;">
+              <h4>🌱 Nutrients</h4>
+              <p>Nitrogen, Phosphorus, Potassium deficiencies</p>
+            </div>
+            <div style="padding: 15px; background: #f3e5f5; border-radius: 8px;">
+              <h4>💧 Stress</h4>
+              <p>Water stress, Heat stress, Lodging</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WEATHER from index.html -->
+      <section id="weather" class="page-content">
+        <div class="widget-card">
+          <h2 id="weatherTitle">Weather & Alerts</h2>
+
+          <div class="alert alert-warning" id="weatherAlertBox" style="display: none;">
+            <span>⚠️</span>
+            <span id="alertText">Weather alert will appear here</span>
+          </div>
+
+          <select id="city" class="form-control">
+            <option value="satara">Satara</option>
+            <option value="pune">Pune</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="kolhapur">Kolhapur</option>
+            <option value="baramati">Baramati</option>
+          </select>
+          <button class="btn" id="weatherButton" onclick="showWeather()" style="margin-top: 1rem;">Show Weather</button>
+          <div id="weatherResult" style="margin-top:20px; font-weight:bold; text-align: left; padding-left: 20px;"></div>
+
+          <div id="weatherForecast" style="margin-top: 20px; display: none;">
+            <h3>7-Day Forecast</h3>
+            <div id="forecastContainer"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALCULATOR from index.html -->
+      <section id="calculator" class="page-content">
+        <h2 id="calculatorTitle">Farming Calculators</h2>
+
+        <div class="crop-calculator">
+          <h3>💰 Profit Calculator</h3>
+          <input type="number" id="landArea" class="form-control" placeholder="Land Area (acres)">
+          <input type="number" id="expectedYield" class="form-control" placeholder="Expected Yield (tons/acre)">
+          <input type="number" id="sellingPrice" class="form-control" placeholder="Selling Price (₹/ton)" value="3250">
+          <input type="number" id="productionCost" class="form-control" placeholder="Production Cost (₹/acre)" value="60000">
+          <button class="btn" onclick="calculateProfit()">Calculate Profit</button>
+          <div id="profitResult" class="calculator-result"></div>
+        </div>
+
+        <div class="crop-calculator">
+          <h3>🧪 Fertilizer Calculator</h3>
+          <input type="number" id="fertilizerArea" class="form-control" placeholder="Land Area (acres)">
+          <select id="fertilizerType" class="form-control">
+            <option value="urea">Urea (Nitrogen)</option>
+            <option value="dap">DAP (Phosphorus)</option>
+            <option value="mop">MOP (Potassium)</option>
+            <option value="complex">Complex Fertilizer</option>
+          </select>
+          <button class="btn" onclick="calculateFertilizer()">Calculate Requirement</button>
+          <div id="fertilizerResult" class="calculator-result"></div>
+        </div>
+
+        <div class="crop-calculator">
+          <h3>💧 Water Requirement Calculator</h3>
+          <input type="number" id="waterArea" class="form-control" placeholder="Land Area (acres)">
+          <select id="cropStage" class="form-control">
+            <option value="initial">Initial Stage</option>
+            <option value="development">Development Stage</option>
+            <option value="mid">Mid Season</option>
+            <option value="late">Late Season</option>
+          </select>
+          <button class="btn" onclick="calculateWater()">Calculate Water Need</button>
+          <div id="waterResult" class="calculator-result"></div>
+        </div>
+      </section>
+
+      <!-- NEW FEATURE PAGES from index.html -->
+      
+      <!-- Crop Rotation Planner -->
+      <section id="cropRotation" class="page-content">
+        <h2>Crop Rotation Planner</h2>
+        <p>Plan your crop rotation to maintain soil health and maximize yield</p>
+        
+        <div class="crop-rotation-container">
+          <div class="rotation-card">
+            <h3>Current Crop</h3>
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 3rem;">🌾</div>
+              <h3>Sugarcane</h3>
+              <p>Planted: August 2023</p>
+              <p>Harvest: November 2024</p>
+            </div>
+          </div>
+          
+          <div class="rotation-card">
+            <h3>Next Rotation</h3>
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 3rem;">🫘</div>
+              <h3>Soybean</h3>
+              <p>Recommended after sugarcane</p>
+              <p>Planting: December 2024</p>
+            </div>
+            <button class="btn" style="width: 100%; margin-top: 15px;" onclick="setRotationReminder()">Set Reminder</button>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 30px;">Rotation Schedule</h3>
+        <div class="rotation-schedule">
+          <div class="season-box active">
+            <div>Kharif</div>
+            <div>Sugarcane</div>
+          </div>
+          <div class="season-box">
+            <div>Rabi</div>
+            <div>Wheat</div>
+          </div>
+          <div class="season-box">
+            <div>Summer</div>
+            <div>Moong</div>
+          </div>
+          <div class="season-box">
+            <div>Next Kharif</div>
+            <div>Soybean</div>
+          </div>
+        </div>
+        
+        <div class="widget-card" style="margin-top: 30px;">
+          <h3>Benefits of This Rotation</h3>
+          <ul>
+            <li>Improves soil nitrogen levels</li>
+            <li>Breaks pest and disease cycles</li>
+            <li>Increases overall farm productivity</li>
+            <li>Reduces fertilizer requirements</li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- Soil Health Monitor -->
+      <section id="soilHealth" class="page-content">
+        <h2>Soil Health Monitor</h2>
+        <p>Track your soil health metrics and get recommendations</p>
+        
+        <div class="soil-health-container">
+          <div class="soil-metric">
+            <h3>Nitrogen (N)</h3>
+            <div class="soil-value">245 kg/ha</div>
+            <div class="soil-status status-good">Optimal</div>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Last tested: 2 months ago</p>
+          </div>
+          
+          <div class="soil-metric">
+            <h3>Phosphorus (P)</h3>
+            <div class="soil-value">18.5 ppm</div>
+            <div class="soil-status status-fair">Moderate</div>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Consider adding phosphate fertilizer</p>
+          </div>
+          
+          <div class="soil-metric">
+            <h3>Potassium (K)</h3>
+            <div class="soil-value">150 ppm</div>
+            <div class="soil-status status-good">Optimal</div>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Last tested: 2 months ago</p>
+          </div>
+          
+          <div class="soil-metric">
+            <h3>pH Level</h3>
+            <div class="soil-value">6.8</div>
+            <div class="soil-status status-good">Ideal</div>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Neutral - perfect for sugarcane</p>
+          </div>
+        </div>
+        
+        <div class="widget-card" style="margin-top: 30px;">
+          <h3>Soil Health Recommendations</h3>
+          <div class="alert alert-success">
+            <span>✅</span>
+            <span>Your soil health is generally good. Consider adding phosphate fertilizer to boost phosphorus levels.</span>
+          </div>
+          
+          <div style="margin-top: 20px;">
+            <h4>Recommended Actions</h4>
+            <ul>
+              <li>Apply DAP fertilizer @ 100 kg/acre before next planting</li>
+              <li>Continue with current organic manure application</li>
+              <li>Test soil again after current harvest</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="widget-card" style="margin-top: 30px;">
+          <h3>Schedule Soil Test</h3>
+          <input type="date" id="soilTestDate" class="form-control">
+          <button class="btn" onclick="scheduleSoilTest()">Schedule Test</button>
+        </div>
+      </section>
+      
+      <!-- Smart Irrigation System -->
+      <section id="irrigation" class="page-content">
+        <h2>Smart Irrigation System</h2>
+        <p>Monitor and control your irrigation system</p>
+        
+        <div class="irrigation-container">
+          <div class="irrigation-card">
+            <h3>Water Level</h3>
+            <div class="water-level">
+              <div class="water-fill" style="width: 75%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>0%</span>
+              <span>75%</span>
+              <span>100%</span>
+            </div>
+            <p style="margin-top: 10px; text-align: center;">Good water availability</p>
+          </div>
+          
+          <div class="irrigation-card">
+            <h3>Next Irrigation</h3>
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 2rem;">📅</div>
+              <h3>Tomorrow, 6:00 AM</h3>
+              <p>Duration: 2 hours</p>
+            </div>
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="modifyIrrigationSchedule()">Modify Schedule</button>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+          <h3>Irrigation Zones</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Zone</th>
+                  <th>Area</th>
+                  <th>Last Irrigated</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>North Field</td>
+                  <td>2 acres</td>
+                  <td>3 days ago</td>
+                  <td><span style="color:var(--warning-color);">Due Soon</span></td>
+                  <td><button class="contact-btn" onclick="irrigateZone('North Field')">Irrigate Now</button></td>
+                </tr>
+                <tr>
+                  <td>South Field</td>
+                  <td>3 acres</td>
+                  <td>2 days ago</td>
+                  <td><span style="color:var(--success-color);">Adequate</span></td>
+                  <td><button class="contact-btn" onclick="scheduleIrrigation('South Field')">Schedule</button></td>
+                </tr>
+                <tr>
+                  <td>East Field</td>
+                  <td>1.5 acres</td>
+                  <td>4 days ago</td>
+                  <td><span style="color:var(--danger-color);">Needs Water</span></td>
+                  <td><button class="contact-btn" onclick="irrigateZone('East Field')">Irrigate Now</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+          <h3>Water Usage Statistics</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="padding: 15px; background: white; border-radius: 8px; text-align: center; box-shadow: var(--shadow-sm);">
+              <div style="font-size: 1.5rem; font-weight: bold;">1250 L</div>
+              <div>Daily Usage</div>
+            </div>
+            <div style="padding: 15px; background: white; border-radius: 8px; text-align: center; box-shadow: var(--shadow-sm);">
+              <div style="font-size: 1.5rem; font-weight: bold;">18%</div>
+              <div>Saved vs Traditional</div>
+            </div>
+            <div style="padding: 15px; background: white; border-radius: 8px; text-align: center; box-shadow: var(--shadow-sm);">
+              <div style="font-size: 1.5rem; font-weight: bold;">₹2,150</div>
+              <div>Monthly Savings</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Farm Equipment Rental -->
+      <section id="equipment" class="page-content">
+        <h2>Farm Equipment Rental</h2>
+        <p>Rent farm equipment on hourly, daily or monthly basis</p>
+        
+        <div class="equipment-grid">
+          <div class="equipment-card">
+            <div class="equipment-image">🚜</div>
+            <div class="equipment-body">
+              <h3>Tractor</h3>
+              <p>45 HP with trailer</p>
+              <div class="equipment-price">₹800/day</div>
+              <button class="contact-btn" onclick="rentEquipment('Tractor')">Rent Now</button>
+            </div>
+          </div>
+          
+          <div class="equipment-card">
+            <div class="equipment-image">🌾</div>
+            <div class="equipment-body">
+              <h3>Harvester</h3>
+              <p>Combine harvester for sugarcane</p>
+              <div class="equipment-price">₹5000/day</div>
+              <button class="contact-btn" onclick="rentEquipment('Harvester')">Rent Now</button>
+            </div>
+          </div>
+          
+          <div class="equipment-card">
+            <div class="equipment-image">💧</div>
+            <div class="equipment-body">
+              <h3>Drip Irrigation System</h3>
+              <p>Complete setup for 1 acre</p>
+              <div class="equipment-price">₹1500/month</div>
+              <button class="contact-btn" onclick="rentEquipment('Drip Irrigation System')">Rent Now</button>
+            </div>
+          </div>
+          
+          <div class="equipment-card">
+            <div class="equipment-image">🚁</div>
+            <div class="equipment-body">
+              <h3>Sprayer Drone</h3>
+              <p>For pesticide application</p>
+              <div class="equipment-price">₹2000/day</div>
+              <button class="contact-btn" onclick="rentEquipment('Sprayer Drone')">Rent Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+          <h3>My Equipment Bookings</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Equipment</th>
+                  <th>Rental Period</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Harvester</td>
+                  <td>15-20 Nov 2023</td>
+                  <td><span style="color:var(--success-color);">Confirmed</span></td>
+                  <td><button class="contact-btn" onclick="cancelBooking('Harvester')">Cancel</button></td>
+                </tr>
+                <tr>
+                  <td>Tractor</td>
+                  <td>25-30 Nov 2023</td>
+                  <td><span style="color:var(--warning-color);">Pending</span></td>
+                  <td><button class="contact-btn" onclick="cancelBooking('Tractor')">Cancel</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Digital Payments -->
+      <section id="payments" class="page-content">
+        <h2>Digital Payments</h2>
+        <p>Secure and convenient payment options for all your farming needs</p>
+        
+        <div class="widget-card">
+          <h3>Payment Methods</h3>
+          <div class="payment-options">
+            <div class="payment-option" onclick="selectPaymentMethod('UPI')">
+              <div class="payment-icon">📱</div>
+              <div>UPI</div>
+            </div>
+            <div class="payment-option" onclick="selectPaymentMethod('Bank Transfer')">
+              <div class="payment-icon">🏦</div>
+              <div>Bank Transfer</div>
+            </div>
+            <div class="payment-option" onclick="selectPaymentMethod('Credit Card')">
+              <div class="payment-icon">💳</div>
+              <div>Credit Card</div>
+            </div>
+            <div class="payment-option" onclick="selectPaymentMethod('Debit Card')">
+              <div class="payment-icon">💳</div>
+              <div>Debit Card</div>
+            </div>
+          </div>
+          
+          <div id="paymentForm" style="display: none; margin-top: 20px;">
+            <h4 id="selectedMethod">Payment Method</h4>
+            <input type="number" id="paymentAmount" class="form-control" placeholder="Amount (₹)">
+            <input type="text" id="paymentDetails" class="form-control" placeholder="Payment Details">
+            <button class="btn" onclick="processPayment()">Make Payment</button>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+          <h3>Payment History</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>15 Nov 2023</td>
+                  <td>Fertilizer Purchase</td>
+                  <td>₹5,200</td>
+                  <td><span style="color:var(--success-color);">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>10 Nov 2023</td>
+                  <td>Equipment Rental</td>
+                  <td>₹8,000</td>
+                  <td><span style="color:var(--success-color);">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>5 Nov 2023</td>
+                  <td>Seed Purchase</td>
+                  <td>₹3,500</td>
+                  <td><span style="color:var(--success-color);">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Farm Diary -->
+      <section id="diary" class="page-content">
+        <h2>Farm Diary</h2>
+        <p>Record your daily farming activities and observations</p>
+        
+        <div class="diary-container">
+          <div class="diary-input">
+            <input type="date" id="diaryDate" class="form-control">
+            <textarea id="diaryEntry" class="form-control" placeholder="Record your farming activities, observations, or notes..."></textarea>
+            <button class="btn" onclick="addDiaryEntry()">Add Entry</button>
+          </div>
+          
+          <div id="diaryEntries">
+            <div class="diary-entry">
+              <div class="diary-date">15 November 2023</div>
+              <div class="diary-content">Applied nitrogen fertilizer to sugarcane crop. Noticed some yellowing in lower leaves. Scheduled soil test for next week.</div>
+            </div>
+            <div class="diary-entry">
+              <div class="diary-date">12 November 2023</div>
+              <div class="diary-content">Completed weeding in north field. Irrigation system working properly. No signs of pests detected.</div>
+            </div>
+            <div class="diary-entry">
+              <div class="diary-date">8 November 2023</div>
+              <div class="diary-content">Light rainfall today - 15mm. Good for crop growth. Postponed scheduled irrigation.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Training Resources -->
+      <section id="training" class="page-content">
+        <h2>Training Resources</h2>
+        <p>Learn new farming techniques and best practices</p>
+        
+        <div class="resources-grid">
+          <div class="resource-card">
+            <div class="resource-image">📚</div>
+            <div class="resource-body">
+              <div class="resource-title">Sugarcane Cultivation Masterclass</div>
+              <p>Complete guide from planting to harvest</p>
+              <div class="resource-duration">Duration: 4 weeks</div>
+              <button class="contact-btn" onclick="enrollTraining('Sugarcane Cultivation')">Enroll Now</button>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-image">💧</div>
+            <div class="resource-body">
+              <div class="resource-title">Drip Irrigation Management</div>
+              <p>Optimize water usage for better yields</p>
+              <div class="resource-duration">Duration: 2 weeks</div>
+              <button class="contact-btn" onclick="enrollTraining('Drip Irrigation')">Enroll Now</button>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-image">🦠</div>
+            <div class="resource-body">
+              <div class="resource-title">Pest & Disease Management</div>
+              <p>Identify and control common sugarcane issues</p>
+              <div class="resource-duration">Duration: 3 weeks</div>
+              <button class="contact-btn" onclick="enrollTraining('Pest Management')">Enroll Now</button>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-image">💰</div>
+            <div class="resource-body">
+              <div class="resource-title">Farm Business Management</div>
+              <p>Maximize profits through better planning</p>
+              <div class="resource-duration">Duration: 4 weeks</div>
+              <button class="contact-btn" onclick="enrollTraining('Business Management')">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+          <h3>My Enrollments</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Start Date</th>
+                  <th>Progress</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sugarcane Cultivation Masterclass</td>
+                  <td>1 Nov 2023</td>
+                  <td>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
+                    <div>65% Complete</div>
+                  </td>
+                  <td><button class="contact-btn" onclick="continueTraining('Sugarcane Cultivation')">Continue</button></td>
+                </tr>
+                <tr>
+                  <td>Drip Irrigation Management</td>
+                  <td>15 Nov 2023</td>
+                  <td>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 30%;"></div>
+                    </div>
+                    <div>30% Complete</div>
+                  </td>
+                  <td><button class="contact-btn" onclick="continueTraining('Drip Irrigation')">Continue</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <footer id="footerText">
+        Prototype — Smart Krishi Mitra (English/Marathi Supported) • Helpline: 1800-123-4567
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Global variables from index.html
+    let currentLang = "en";
+    let climateIndex = 0;
+    let factIndex = 0;
+    let selectedPaymentMethod = "";
+    let chatHistory = [];
+
+    // Check if user is logged in
+    function checkLoginStatus() {
+      const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+      if (isLoggedIn) {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'block';
+        initializeApp();
+      } else {
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('appContainer').style.display = 'none';
+      }
+    }
+
+    // Initialize the application
+    function initializeApp() {
+      // Set up dashboard widgets
+      rotateClimate();
+      setInterval(rotateClimate, 5000);
+      rotateFacts();
+      setInterval(rotateFacts, 7000);
+
+      // Set up weather page default
+      showWeather();
+      
+      // Initial UI update for English (default)
+      updateUI('en');
+      
+      // Initialize chat
+      initializeChat();
+      
+      // Start real-time updates
+      startRealTimeUpdates();
+      updateStatsBar();
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('userLoggedIn');
+      localStorage.removeItem('username');
+      checkLoginStatus();
+    }
+
+    // Real-time Updates
+    function startRealTimeUpdates() {
+      setInterval(() => {
+        updateStatsBar();
+        updateWeatherWidget();
+      }, 5000);
+    }
+
+    function updateStatsBar() {
+      const temp = 28 + Math.random() * 4;
+      const humidity = 60 + Math.random() * 20;
+      const price = 3200 + Math.random() * 200;
+      
+      document.getElementById('tempStat').textContent = `${temp.toFixed(1)}°C`;
+      document.getElementById('humidityStat').textContent = `${humidity.toFixed(0)}%`;
+      document.getElementById('priceStat').textContent = `${Math.round(price)} ₹/q`;
+      document.getElementById('iotStat').textContent = `4/4`;
+    }
+
+    function updateWeatherWidget() {
+      const cities = ["Satara", "Pune", "Mumbai", "Kolhapur"];
+      const city = cities[Math.floor(Math.random() * cities.length)];
+      const temp = 25 + Math.random() * 10;
+      const conditions = ["Sunny", "Partly Cloudy", "Light Rain", "Clear"];
+      const condition = conditions[Math.floor(Math.random() * conditions.length)];
+      
+      document.getElementById('currentTemp').textContent = `${temp.toFixed(1)}°C`;
+      document.getElementById('weatherCondition').textContent = `${condition} in ${city}`;
+      document.getElementById('currentHumidity').textContent = `${(50 + Math.random() * 30).toFixed(0)}%`;
+      document.getElementById('currentWind').textContent = `${(5 + Math.random() * 15).toFixed(1)} km/h`;
+      document.getElementById('sunriseTime').textContent = `06:${Math.floor(Math.random() * 30).toString().padStart(2, '0')}`;
+    }
+
+    // Translation data from index.html
+    const translations = {
+      en: {
+        appTitle: "Smart Krishi Mitra",
+        headerTitle: "Smart Krishi Mitra",
+        headerTagline: "Digital companion: Seed → Harvest → Market",
+        usernameLabel: "Username or Phone",
+        passwordLabel: "Password",
+        loginButton: "Login",
+        noAccount: "Don't have an account?",
+        registerLink: "Register here",
+        forgotPassword: "Forgot your password?",
+        forgotPasswordLink: "Forgot your password?",
+        lang_btn: "मराठी",
+        registerTitle: "Create Account",
+        registerTagline: "Join Smart Krishi Mitra today",
+        fullNameLabel: "Full Name",
+        phoneLabel: "Phone Number",
+        emailLabel: "Email (Optional)",
+        locationLabel: "Location/Village",
+        regPasswordLabel: "Password",
+        confirmPasswordLabel: "Confirm Password",
+        registerButton: "Create Account",
+        haveAccount: "Already have an account?",
+        loginLink: "Login here",
+        appHeaderTitle: "Smart Krishi Mitra",
+        appHeaderTagline: "Digital companion: Seed → Harvest → Market",
+        dashboard: "Dashboard",
+        marketplace: "Marketplace",
+        community: "Community",
+        storage: "Storage",
+        govt: "Govt Schemes",
+        planner: "Planner",
+        assistant: "AI Assistant",
+        camera: "Camera",
+        weather: "Weather",
+        calculator: "Calculator",
+        climateTitle: "🌦 Climate Update",
+        viewDetailedLink: "View Detailed Weather",
+        statusTitle: "Sugarcane Status",
+        statusText: "Trench method planting recommended. **Next step: Nitrogen top-dressing.**",
+        marqueeText: "🌱 Govt announces subsidy on organic fertilizers • 🚜 New high-yielding sugarcane hybrid released (Co 0238) • 💸 Sugarcane Fair and Remunerative Price (FRP) increased this year",
+        didYouKnowTitle: "💡 Did you know?",
+        qlMarket: "🛒 Marketplace",
+        qlGovt: "📑 Govt Schemes",
+        qlAssistant: "🤖 AI Assistant",
+        qlCalculator: "🧮 Calculator",
+        marketListingsTitle: "Sugarcane Listings",
+        pricePredTitle: "📊 Price Prediction",
+        pricePredText: "Based on current trends, here are predicted prices:",
+        market_col_crop: "Crop",
+        market_col_qty: "Quantity",
+        market_col_price: "Price (₹/quintal)",
+        market_col_seller: "Seller",
+        market_col_current: "Current Price",
+        market_col_predict: "Predicted Price (Next Month)",
+        communityTitle: "Recent Discussions (Sugarcane Focus)",
+        storageAvailableTitle: "Available Storage",
+        storageLogisticsTitle: "Logistics",
+        storageLogisticsText: "Local transporters available for crop movement. Contact regional offices for details.",
+        govtSchemesTitle: "Govt Schemes",
+        govtLoansTitle: "Loan Information",
+        plannerTitle: "Planner — Sugarcane Cultivation",
+        planner_stage: "Stage",
+        planner_timeline: "Timeline",
+        planner_activity: "Activity",
+        planner_key_focus: "Key Focus",
+        assistantTitle: "Ask the Assistant (Sugarcane Expert)",
+        aiQuestionPlaceholder: "e.g. When to harvest sugarcane?",
+        aiButton: "Get Answer",
+        cameraTitle: "Sugarcane Health Detection",
+        cameraDescription: "Capture or upload images of your sugarcane crop for AI-powered disease detection and health analysis.",
+        cameraButton: "Analyze Sugarcane Crop",
+        weatherTitle: "Weather & Alerts",
+        weatherButton: "Show Weather",
+        calculatorTitle: "Farming Calculators",
+        footerText: "Prototype — Smart Krishi Mitra (English/Marathi Supported) • Helpline: 1800-123-4567",
+        priceAlertTitle: "💰 Price Alert",
+        taskReminderTitle: "📅 Today's Tasks",
+        cropCycleTitle: "🌱 Your Sugarcane Crop Cycle",
+        market_col_contact: "Contact",
+        market_col_trend: "Trend",
+        sellYourCropTitle: "Sell Your Crop",
+        schemeAlert: "New: 80% subsidy on solar pumps for small farmers",
+        plannerAlert: "Next recommended action: Nitrogen top-dressing (Due in 5 days)",
+        progressStart: "Planting",
+        progressCurrent: "65% Complete",
+        progressEnd: "Harvest",
+        cycleEstimate: "Estimated harvest: 45 days remaining",
+        marketAlert: "Best time to sell: Prices expected to rise next week",
+        dashboardTitle: "🌾 Smart Farming Dashboard"
+      },
+      mr: {
+        appTitle: "स्मार्ट कृषी मित्र",
+        headerTitle: "स्मार्ट कृषी मित्र",
+        headerTagline: "डिजिटल साथी: बियाणे → काढणी → बाजार",
+        usernameLabel: "वापरकर्तानाव किंवा फोन",
+        passwordLabel: "पासवर्ड",
+        loginButton: "लॉगिन",
+        noAccount: "खाते नाही?",
+        registerLink: "येथे नोंदणी करा",
+        forgotPassword: "पासवर्ड विसरलात?",
+        forgotPasswordLink: "पासवर्ड विसरलात?",
+        lang_btn: "English",
+        registerTitle: "खाते तयार करा",
+        registerTagline: "आजच स्मार्ट कृषी मित्र सामील व्हा",
+        fullNameLabel: "पूर्ण नाव",
+        phoneLabel: "फोन नंबर",
+        emailLabel: "ईमेल (पर्यायी)",
+        locationLabel: "स्थान/गाव",
+        regPasswordLabel: "पासवर्ड",
+        confirmPasswordLabel: "पासवर्डची पुष्टी करा",
+        registerButton: "खाते तयार करा",
+        haveAccount: "आधीपासून खाते आहे?",
+        loginLink: "येथे लॉगिन करा",
+        appHeaderTitle: "स्मार्ट कृषी मित्र",
+        appHeaderTagline: "डिजिटल साथी: बियाणे → काढणी → बाजार",
+        dashboard: "डॅशबोर्ड",
+        marketplace: "बाजारपेठ",
+        community: "समुदाय",
+        storage: "साठवणूक",
+        govt: "सरकारी योजना",
+        planner: "नियोजन",
+        assistant: "एआय सहाय्यक",
+        camera: "कॅमेरा",
+        weather: "हवामान",
+        calculator: "कॅल्क्युलेटर",
+        climateTitle: "🌦 हवामान अपडेट",
+        viewDetailedLink: "सविस्तर हवामान पहा",
+        statusTitle: "ऊस स्थिती",
+        statusText: "चर पद्धतीने लागवड करण्याची शिफारस. **पुढील पायरी: नत्र खत वरखत.**",
+        marqueeText: "🌱 सेंद्रिय खतांवर सरकारी अनुदानाची घोषणा • 🚜 नवीन अधिक उत्पादन देणारी ऊस संकरित जात (Co 0238) प्रकाशित • 💸 यावर्षी ऊसाचा वाजवी आणि लाभकारी दर (FRP) वाढवला गेला",
+        didYouKnowTitle: "💡 तुम्हाला माहित आहे का?",
+        qlMarket: "🛒 बाजारपेठ",
+        qlGovt: "📑 सरकारी योजना",
+        qlAssistant: "🤖 एआय सहाय्यक",
+        qlCalculator: "🧮 कॅल्क्युलेटर",
+        marketListingsTitle: "ऊस सूची",
+        pricePredTitle: "📊 किंमत अंदाज",
+        pricePredText: "सध्याच्या ट्रेंडनुसार, अंदाजित दर खालीलप्रमाणे आहेत:",
+        market_col_crop: "पीक",
+        market_col_qty: "प्रमाण",
+        market_col_price: "किंमत (₹/क्विंटल)",
+        market_col_seller: "विक्रेता",
+        market_col_current: "सद्य किंमत",
+        market_col_predict: "अंदाजित किंमत (पुढील महिना)",
+        communityTitle: "अलीकडील चर्चा (ऊस केंद्रित)",
+        storageAvailableTitle: "उपलब्ध साठवणूक",
+        storageLogisticsTitle: "वाहतूक",
+        storageLogisticsText: "पीक वाहतुकीसाठी स्थानिक वाहतूकदार उपलब्ध. तपशीलांसाठी प्रादेशिक कार्यालयांशी संपर्क साधा.",
+        govtSchemesTitle: "सरकारी योजना",
+        govtLoansTitle: "कर्ज माहिती",
+        plannerTitle: "नियोजक — ऊस लागवड",
+        planner_stage: "टप्पा",
+        planner_timeline: "कालमर्यादा",
+        planner_activity: "क्रियाकलाप",
+        planner_key_focus: "मुख्य लक्ष",
+        assistantTitle: "सहाय्यकाला विचारा (ऊस तज्ञ)",
+        aiQuestionPlaceholder: "उदा. ऊस काढणी कधी करावी?",
+        aiButton: "उत्तर मिळवा",
+        cameraTitle: "ऊस कॅमेरा डिटेक्शन सिस्टम",
+        cameraDescription: "AI-पॉवर्ड रोग शोध, कीटक ओळख आणि आरोग्य विश्लेषणासाठी आपल्या ऊस पिकाची छायाचित्रे कॅप्चर किंवा अपलोड करा.",
+        cameraButton: "ऊस पीक विश्लेषण करा",
+        weatherTitle: "हवामान आणि सतर्कता",
+        weatherButton: "हवामान दाखवा",
+        calculatorTitle: "शेती कॅल्क्युलेटर",
+        footerText: "प्रोटोटाइप — स्मार्ट कृषी मित्र (इंग्रजी/मराठी समर्थित) • हेल्पलाइन: 1800-123-4567",
+        priceAlertTitle: "💰 किंमत सूचना",
+        taskReminderTitle: "📅 आजची कामे",
+        cropCycleTitle: "🌱 तुमचा ऊस पीक चक्र",
+        market_col_contact: "संपर्क",
+        market_col_trend: "ट्रेंड",
+        sellYourCropTitle: "तुमचे पीक विका",
+        schemeAlert: "नवीन: लहान शेतकऱ्यांसाठी सौर पंपांवर 80% अनुदान",
+        plannerAlert: "पुढील शिफारस केलेली कृती: नत्र वरखत (5 दिवसात देय)",
+        progressStart: "लागवड",
+        progressCurrent: "65% पूर्ण",
+        progressEnd: "कापणी",
+        cycleEstimate: "अंदाजे कापणी: 45 दिवस शिल्लक",
+        marketAlert: "विक्रीची उत्तम वेळ: पुढील आठवड्यात किंमती वाढण्याची अपेक्षा",
+        dashboardTitle: "🌾 स्मार्ट शेती डॅशबोर्ड"
+      }
+    };
+
+    // Weather data from index.html
+    const weatherData = {
+      satara: { 
+        temp: "28°C", 
+        condition_en: "🌤 Partly Cloudy", 
+        condition_mr: "🌤 अंशतः ढगाळ", 
+        humidity: "62%", 
+        wind: "12 km/h",
+        alert_en: "Good weather for sugarcane growth",
+        alert_mr: "ऊस वाढीसाठी चांगले हवामान"
+      },
+      pune: { 
+        temp: "30°C", 
+        condition_en: "☀ Sunny", 
+        condition_mr: "☀ ऊन", 
+        humidity: "55%", 
+        wind: "10 km/h",
+        alert_en: "Light irrigation recommended today",
+        alert_mr: "आज हलके सिंचन शिफारस"
+      },
+      mumbai: { 
+        temp: "32°C", 
+        condition_en: "🌦 Humid with Clouds", 
+        condition_mr: "🌦 ढगाळ आणि दमट", 
+        humidity: "75%", 
+        wind: "15 km/h",
+        alert_en: "High humidity - watch for fungal diseases",
+        alert_mr: "जास्त आर्द्रता - बुरशीजन्य रोगांवर लक्ष ठेवा"
+      },
+      kolhapur: { 
+        temp: "27°C", 
+        condition_en: "🌧 Light Rain", 
+        condition_mr: "🌧 हलका पाऊस", 
+        humidity: "70%", 
+        wind: "14 km/h",
+        alert_en: "Ideal for new sugarcane setts",
+        alert_mr: "नवीन ऊस कांड्यांसाठी आदर्श"
+      },
+      baramati: { 
+        temp: "31°C", 
+        condition_en: "⛅ Hot & Humid", 
+        condition_mr: "⛅ गरम आणि दमट", 
+        humidity: "58%", 
+        wind: "9 km/h",
+        alert_en: "Sugarcane needs adequate water",
+        alert_mr: "ऊसाला पुरेसे पाणी आवश्यक"
+      }
+    };
+
+    // Climate data for dashboard
+    const climateData = [
+      { city:"satara", en: "🌤 Satara: 28°C, Partly Cloudy — **Excellent for Sugarcane Tiller growth.**", mr: "🌤 सातारा: 28°C, अंशतः ढगाळ — **ऊस फुटव्यांच्या वाढीसाठी उत्कृष्ट.**"},
+      { city:"pune", en: "☀ Pune: 30°C, Sunny — **Sugarcane requires light irrigation today.**", mr: "☀ पुणे: 30°C, ऊन — **ऊसाला आज हलकी सिंचनाची आवश्यकता आहे.**"},
+      { city:"mumbai", en: "🌦 Mumbai: 32°C, Humid & Cloudy — **High humidity caution for sugarcane Red Rot.**", mr: "🌦 मुंबई: 32°C, दमट आणि ढगाळ — **ऊस तांबेरा रोगासाठी (Red Rot) जास्त आर्द्रतेमुळे धोका.**"},
+      { city:"kolhapur", en: "🌧 Kolhapur: 27°C, Light Rain — **Ideal for new sugarcane setts.**", mr: "🌧 कोल्हापूर: 27°C, हलका पाऊस — **नवीन ऊस कांड्यांसाठी आदर्श.**"},
+      { city:"baramati", en: "⛅ Baramati: 31°C, Hot & Humid — **Sugarcane Grand Growth Phase needs water.**", mr: "⛅ बारामती: 31°C, गरम आणि दमट — **ऊस जलद वाढीच्या टप्प्यात आहे, पाण्याची गरज आहे.**"}
+    ];
+
+    // Facts data
+    const facts = [
+      { en: "🌱 Drip irrigation saves up to 70% more water than traditional methods.", mr: "🌱 ठिबक सिंचनामुळे पारंपारिक पद्धतींपेक्षा 70% पर्यंत पाण्याची बचत होते." },
+      { en: "🏭 Sugarcane is a C4 plant, making it highly efficient in converting sunlight to biomass.", mr: "🏭 ऊस हे C4 पीक आहे, जे सूर्यप्रकाशाचे बायोमासमध्ये रूपांतर करण्यात अत्यंत कार्यक्षम आहे." },
+      { en: "🍃 Sugarcane provides both sugar and biofuel.", mr: "🍃 ऊस साखर आणि जैवइंधन (Biofuel) दोन्ही प्रदान करतो." },
+      { en: "🐄 Cow dung is a natural fertilizer rich in nitrogen and phosphorus.", mr: "🐄 गाईचे शेण नत्र (Nitrogen) आणि स्फुरद (Phosphorus) मध्ये समृद्ध असलेले नैसर्गिक खत आहे." },
+      { en: "☀ Solar pumps can cut irrigation costs significantly.", mr: "☀ सौर पंपांमुळे सिंचनाचा खर्च लक्षणीयरीत्या कमी होऊ शकतो." }
+    ];
+
+    // AI Assistant Knowledge Base from index.html
+    const knowledgeBase = {
+      // Sugarcane cultivation
+      "planting": {
+        en: "🌱 **Sugarcane Planting**: Best time is Adsali (July-August) in Maharashtra. Use 3-bud setts with fungicide treatment. Trench planting (90-120cm between rows) increases yield by 15-20%.",
+        mr: "🌱 **ऊस लागवड**: महाराष्ट्रात आडसाली (जुलै-ऑगस्ट) ही सर्वोत्तम वेळ आहे. बुरशीनाशक उपचार केलेले 3-डोळ्यांचे बेणे वापरा. चर पद्धती (रांगांमध्ये 90-120cm) उत्पादन 15-20% वाढवते."
+      },
+      "irrigation": {
+        en: "💧 **Irrigation**: Heavy during Grand Growth (Mar-Jun). Stop 4-6 weeks before harvest. Drip irrigation saves 30-50% water. Total requirement: 1500-2500mm per crop cycle.",
+        mr: "💧 **सिंचन**: जलद वाढीत (मार्च-जून) जास्त पाणी. कापणीपूर्वी 4-6 आठवडे थांबवा. ठिबक सिंचन 30-50% पाणी वाचवते. एकूण गरज: 1500-2500mm प्रति पीक चक्र."
+      },
+      "harvest": {
+        en: "🌾 **Harvest**: After 10-12 months (Adsali: 16-18 months) when brix reaches 18-20%. Use sharp knives, cut at ground level. Average yield: 70-100 tons/hectare.",
+        mr: "🌾 **कापणी**: 10-12 महिन्यांनी (आडसाली: 16-18 महिने) जेव्हा ब्रिक्स 18-20% पोहोचेल. तीक्ष्ण चाकू वापरा, जमिनीपातळीवर कापा. सरासरी उत्पादन: 70-100 टन/हेक्टर."
+      },
+      "fertilizer": {
+        en: "🧪 **Fertilizer**: 250:115:115 kg/ha N:P:K. Apply N in 3 splits. FYM: 25-30 tons/ha. Zinc: 25 kg/ha zinc sulphate. Soil testing recommended before application.",
+        mr: "🧪 **खत**: 250:115:115 kg/ha N:P:K. नत्र 3 हप्त्यांत द्या. FYM: 25-30 टन/हेक्टर. जस्त: 25 kg/ha जस्त सल्फेट. वापरापूर्वी माती चाचणी शिफारस."
+      },
+      "ratoon": {
+        en: "✂️ **Ratooning**: Cut at ground level after harvest. Apply 25% extra N fertilizer. Usually 2-3 ratoon crops taken. Yield decreases 15-20% each cycle.",
+        mr: "✂️ **खोडवा**: कापणीनंतर जमिनीपातळीवर कापा. 25% जास्त नत्र खत द्या. सहसा 2-3 खोडवा पीक घेतले जाते. प्रत्येक चक्रात उत्पादन 15-20% कमी होते."
+      },
+      "price": {
+        en: "💰 **Current Price**: ₹3200-3300 per ton (FRP: ₹3150/quintal). Prices vary by variety: Co 0238 (₹3250-3350), Co 86032 (₹3200-3300). Check local market for exact rates.",
+        mr: "💰 **सध्याचा दर**: ₹3200-3300 प्रति टन (FRP: ₹3150/क्विंटल). जातीनुसार किंमत बदलते: Co 0238 (₹3250-3350), Co 86032 (₹3200-3300). अचूक दरासाठी स्थानिक बाजार तपासा."
+      },
+      // Diseases
+      "red rot": {
+        en: "🦠 **Red Rot**: Fungal disease causing red discoloration inside stalks. Control: Remove infected plants, use resistant varieties (Co 86032), avoid ratooning in infected fields.",
+        mr: "🦠 **तांबेरा**: ऊसाच्या आतील भागात लाल रंगाचे बदल करणारा बुरशीजन्य रोग. नियंत्रण: संसर्गित वनस्पती काढा, प्रतिरोधक जाती वापरा (Co 86032), संसर्गित शेतात खोडवा टाळा."
+      },
+      "smut": {
+        en: "🦠 **Smut**: Fungal disease causing black whip-like structures. Control: Use disease-free setts, hot water treatment (52°C for 30 min), resistant varieties.",
+        mr: "🦠 **काणी**: काळ्या चाबकासारख्या रचना निर्माण करणारा बुरशीजन्य रोग. नियंत्रण: रोगमुक्त बेणे वापरा, गरम पाण्याचा उपचार (52°C for 30 min), प्रतिरोधक जाती."
+      },
+      "wilt": {
+        en: "🦠 **Wilt**: Fungal disease causing drying of leaves. Control: Improve soil drainage, use systemic fungicides, crop rotation.",
+        mr: "🦠 **मर**: पाने सुकण्यास कारणीभूत असलेला बुरशीजन्य रोग. नियंत्रण: मातीचा निचरा सुधारा, पद्धतशीर बुरशीनाशक वापरा, पीक फेरफार."
+      },
+      // Pests
+      "stem borer": {
+        en: "🐛 **Stem Borer**: Larvae bore into stems causing 'dead heart'. Control: Light traps, Trichogramma parasites, neem-based insecticides.",
+        mr: "🐛 **कोंब किडी**: अळ्या खोडांमध्ये प्रवेश करून 'डेड हार्ट' निर्माण करतात. नियंत्रण: प्रकाश सापळे, ट्रायकोग्रामा परजीवी, निंब-आधारित कीटकनाशक."
+      },
+      "woolly aphid": {
+        en: "🐛 **Woolly Aphid**: White cottony masses on leaves. Control: Neem oil (0.5%), soap solution, release ladybird beetles.",
+        mr: "🐛 **लोकरी मावा**: पानांवर पांढरे कापसासारखे गोळे. नियंत्रण: निंब तेल (0.5%), साबण द्रावण, लेडीबर्ड बीटल सोडा."
+      },
+      // Default response
+      "default": {
+        en: "🤖 I'm here to help with sugarcane farming! Ask me about planting, irrigation, harvest, fertilizer, diseases, pests, or pricing.",
+        mr: "🤖 मी ऊस शेतीमध्ये मदत करण्यासाठी इथे आहे! मला लागवड, सिंचन, कापणी, खत, रोग, कीड किंवा किंमतीबद्दल विचारा."
+      }
+    };
+
+    // Disease detection database from index.html
+    const detectionDatabase = [
+      {
+        name: "Red Rot Disease",
+        keywords: ["red rot", "tambera", "reddish", "fungal"],
+        severity: "high",
+        confidence: 86,
+        detection_en: "🚨 **Red Rot** detected - fungal disease causing red discoloration inside cane stalks.",
+        detection_mr: "🚨 **तांबेरा रोग** आढळला - ऊसाच्या आतील भागात लाल रंगाचे बदल करणारा बुरशीजन्य रोग.",
+        recommendation_en: "Remove and burn infected plants. Avoid ratooning in affected fields. Use resistant varieties like Co 86032.",
+        recommendation_mr: "संसर्गित वनस्पती काढून जाळा. प्रभावित शेतात खोडवा टाळा. Co 86032 सारख्या प्रतिरोधक जाती वापरा."
+      },
+      {
+        name: "Smut Disease",
+        keywords: ["smut", "kanni", "black whip", "whip"],
+        severity: "high",
+        confidence: 79,
+        detection_en: "🚨 **Smut Disease** detected - black whip-like structures emerging from cane tops.",
+        detection_mr: "🚨 **काणी रोग** आढळला - ऊसाच्या वरच्या बाजूस काळ्या चाबकासारख्या रचना दिसत आहेत.",
+        recommendation_en: "Remove infected whips carefully in plastic bags to prevent spore spread. Use hot water treatment for setts.",
+        recommendation_mr: "बीजाणूंचा प्रसार रोखण्यासाठी संसर्गित चाबूक प्लास्टिक पिशवीत काळजीपूर्वक काढा. बेण्यांसाठी गरम पाण्याचा उपचार वापरा."
+      },
+      {
+        name: "Wilt Disease",
+        keywords: ["wilt", "wilting", "drooping", "mar"],
+        severity: "medium",
+        confidence: 75,
+        detection_en: "⚠️ **Wilt Disease** suspected - leaves showing drooping and yellowing symptoms.",
+        detection_mr: "⚠️ **मर रोग** संशयित - पाने झुकणे आणि पिवळसर होण्याची लक्षणे दर्शवित आहेत.",
+        recommendation_en: "Improve soil drainage. Apply appropriate fungicide. Avoid waterlogging in field.",
+        recommendation_mr: "मातीचा निचरा सुधारा. योग्य बुरशीनाशक वापरा. शेतात पाणथळ टाळा."
+      },
+      {
+        name: "Leaf Scald",
+        keywords: ["leaf scald", "scald", "white streaks", "pale"],
+        severity: "medium",
+        confidence: 82,
+        detection_en: "⚠️ **Leaf Scald** detected - white streaks and pale areas on leaves.",
+        detection_mr: "⚠️ **पानांचा झालेर** आढळला - पानांवर पांढरे रेषा आणि फिकट क्षेत्र.",
+        recommendation_en: "Use disease-free planting material. Sterilize cutting tools between plants.",
+        recommendation_mr: "रोगमुक्त लागवड साहित्य वापरा. रोपांमध्ये कापणी साधने निर्जंतुक करा."
+      },
+      {
+        name: "Stem Borer",
+        keywords: ["stem borer", "shoot borer", "dead heart", "komb kida"],
+        severity: "medium",
+        confidence: 84,
+        detection_en: "🪲 **Stem Borer** infestation detected - dead heart symptom visible.",
+        detection_mr: "🪲 **कोंब किडी** प्रादुर्भाव आढळला - डेड हार्ट लक्षण दिसत आहे.",
+        recommendation_en: "Apply granular insecticide at plant base. Use light traps. Release Trichogramma parasites.",
+        recommendation_mr: "रोपाच्या तळाशी दाणेदार कीटकनाशक वापरा. प्रकाश सापळे वापरा. ट्रायकोग्रामा परजीवी सोडा."
+      },
+      {
+        name: "Woolly Aphid",
+        keywords: ["woolly aphid", "aphid", "white cottony", "lokanri mava"],
+        severity: "medium",
+        confidence: 88,
+        detection_en: "🪲 **Woolly Aphid** infestation - white cottony masses on leaves and stems.",
+        detection_mr: "🪲 **लोकरी मावा** प्रादुर्भाव - पाने आणि खोडावर पांढरे कापसासारखे गोळे.",
+        recommendation_en: "Spray neem oil (0.5%) or soap solution. Release ladybird beetles as natural predators.",
+        recommendation_mr: "निंब तेल (0.5%) किंवा साबण द्रावण फवारा. नैसर्गिक भक्षक म्हणून लेडीबर्ड बीटल सोडा."
+      },
+      {
+        name: "Nitrogen Deficiency",
+        keywords: ["nitrogen", "yellow leaves", "pale", "stunted"],
+        severity: "medium",
+        confidence: 83,
+        detection_en: "🟡 **Nitrogen Deficiency** - pale yellow older leaves, stunted growth.",
+        detection_mr: "🟡 **नत्र कमतरता** - फिकट पिवळी जुनी पाने, वाढ अडकलेली.",
+        recommendation_en: "Apply urea or other nitrogenous fertilizers in split doses during growth stages.",
+        recommendation_mr: "वाढीच्या टप्प्यांदरम्यान युरिया किंवा इतर नत्रयुक्त खत विभागून द्या."
+      },
+      {
+        name: "Healthy Sugarcane",
+        keywords: ["healthy", "normal", "good", "thriving"],
+        severity: "low",
+        confidence: 92,
+        detection_en: "✅ **Healthy Sugarcane** - crop appears healthy with normal growth patterns.",
+        detection_mr: "✅ **निरोगी ऊस** - पीक सामान्य वाढीच्या पद्धतींसह निरोगी दिसत आहे.",
+        recommendation_en: "Continue current practices. Maintain regular irrigation and monitor for any changes.",
+        recommendation_mr: "सध्याच्या पद्धती चालू ठेवा. नियमित सिंचन राखा आणि कोणत्याही बदलांवर लक्ष ठेवा."
+      }
+    ];
+
+    // Page navigation
+    function showPage(pageId, navElement) {
+      document.querySelectorAll('.page-content').forEach(page => {
+        page.classList.remove('active');
+      });
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+
+      document.querySelectorAll('#mainNav a').forEach(link => {
+        link.classList.remove('active');
+      });
+      if (navElement) {
+        navElement.classList.add('active');
+      }
+    }
+
+    // Language toggle
+    function toggleLanguage() {
+      currentLang = (currentLang === "en") ? "mr" : "en";
+      updateUI(currentLang);
+    }
+
+    // Update UI with translations
+    function updateUI(lang) {
+      const t = translations[lang];
+
+      // Update login page
+      document.getElementById('headerTitle').textContent = t.headerTitle;
+      document.getElementById('headerTagline').textContent = t.headerTagline;
+      document.getElementById('usernameLabel').textContent = t.usernameLabel;
+      document.getElementById('passwordLabel').textContent = t.passwordLabel;
+      document.getElementById('loginButton').textContent = t.loginButton;
+      document.getElementById('noAccount').innerHTML = `${t.noAccount} <a href="#" id="registerLink">${t.registerLink}</a>`;
+      document.getElementById('forgotPassword').innerHTML = `<a href="#" id="forgotPasswordLink">${t.forgotPasswordLink}</a>`;
+      document.getElementById('langBtn').textContent = t.lang_btn;
+      
+      // Update registration form
+      document.getElementById('registerTitle').textContent = t.registerTitle;
+      document.getElementById('registerTagline').textContent = t.registerTagline;
+      document.getElementById('fullNameLabel').textContent = t.fullNameLabel;
+      document.getElementById('phoneLabel').textContent = t.phoneLabel;
+      document.getElementById('emailLabel').textContent = t.emailLabel;
+      document.getElementById('locationLabel').textContent = t.locationLabel;
+      document.getElementById('regPasswordLabel').textContent = t.regPasswordLabel;
+      document.getElementById('confirmPasswordLabel').textContent = t.confirmPasswordLabel;
+      document.getElementById('registerButton').textContent = t.registerButton;
+      document.getElementById('haveAccount').innerHTML = `${t.haveAccount} <a href="#" id="loginLink">${t.loginLink}</a>`;
+      document.getElementById('regLangBtn').textContent = t.lang_btn;
+
+      // Update app page
+      document.getElementById('appHeaderTitle').textContent = t.appHeaderTitle;
+      document.getElementById('appHeaderTagline').textContent = t.appHeaderTagline;
+      document.getElementById('appLangBtn').textContent = t.lang_btn;
+
+      // Update all text elements
+      const elements = [
+        'climateTitle', 'viewDetailedLink', 'marqueeText', 'didYouKnowTitle',
+        'qlMarket', 'qlGovt', 'qlAssistant', 'qlCalculator', 'marketListingsTitle',
+        'pricePredTitle', 'pricePredText', 'communityTitle', 'storageAvailableTitle',
+        'storageLogisticsTitle', 'govtSchemesTitle', 'govtLoansTitle', 'plannerTitle',
+        'assistantTitle', 'cameraTitle', 'cameraDescription', 'weatherTitle', 
+        'weatherButton', 'calculatorTitle', 'footerText', 'priceAlertTitle', 
+        'taskReminderTitle', 'cropCycleTitle', 'sellYourCropTitle', 'schemeAlert',
+        'plannerAlert', 'progressStart', 'progressCurrent', 'progressEnd', 
+        'cycleEstimate', 'marketAlert', 'dashboardTitle'
+      ];
+
+      elements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = t[id];
+        }
+      });
+
+      // Update navigation links
+      document.querySelectorAll('#mainNav a').forEach(link => {
+        const key = link.getAttribute('data-key');
+        if (key && t[key]) {
+          link.textContent = t[key];
+        }
+      });
+
+      // Update table headers
+      document.querySelectorAll('th[data-key]').forEach(th => {
+        const key = th.getAttribute('data-key');
+        if (key && t[key]) {
+          th.textContent = t[key];
+        }
+      });
+
+      // Update placeholder
+      document.getElementById('aiQuestion').placeholder = t.aiQuestionPlaceholder;
+      document.getElementById('aiButton').textContent = t.aiButton;
+      document.getElementById('cameraButton').textContent = t.cameraButton;
+
+      // Update dynamic content
+      rotateClimate(true);
+      rotateFacts(true);
+    }
+
+    // Climate rotation
+    function rotateClimate(isLangChange = false) {
+      if (isLangChange) {
+        const climateEl = document.getElementById("weatherCondition");
+        if (climateEl) {
+          climateEl.innerHTML = climateData[climateIndex > 0 ? climateIndex - 1 : climateData.length - 1][currentLang];
+        }
+      } else {
+        const climateEl = document.getElementById("weatherCondition");
+        if (climateEl) {
+          climateEl.innerHTML = climateData[climateIndex][currentLang];
+          climateIndex = (climateIndex + 1) % climateData.length;
+        }
+      }
+    }
+
+    // Facts rotation
+    function rotateFacts(isLangChange = false) {
+      if (isLangChange) {
+        const factEl = document.getElementById("factBox");
+        if (factEl) {
+          factEl.textContent = facts[factIndex > 0 ? factIndex - 1 : facts.length - 1][currentLang];
+        }
+      } else {
+        const factEl = document.getElementById("factBox");
+        if (factEl) {
+          factEl.textContent = facts[factIndex][currentLang];
+          factIndex = (factIndex + 1) % facts.length;
+        }
+      }
+    }
+
+    // Weather display
+    function showWeather() {
+      const city = document.getElementById("city").value;
+      const data = weatherData[city];
+      
+      const cityDisplay = city.charAt(0).toUpperCase() + city.slice(1);
+      const condition = currentLang === 'en' ? data.condition_en : data.condition_mr;
+      const alertText = currentLang === 'en' ? data.alert_en : data.alert_mr;
+      
+      const labels = {
+        temp: currentLang === 'en' ? '🌡 Temperature' : '🌡 तापमान',
+        condition: currentLang === 'en' ? '☁ Condition' : '☁ स्थिती',
+        humidity: currentLang === 'en' ? '💧 Humidity' : '💧 आर्द्रता',
+        wind: currentLang === 'en' ? '🌬 Wind' : '🌬 वारा'
+      };
+      
+      document.getElementById("weatherResult").innerHTML = `
+        <p><strong>🌍 ${cityDisplay}</strong></p>
+        <p>${labels.temp}: ${data.temp}</p>
+        <p>${labels.condition}: ${condition}</p>
+        <p>${labels.humidity}: ${data.humidity}</p>
+        <p>${labels.wind}: ${data.wind}</p>
+      `;
+      
+      // Show weather alert
+      const alertBox = document.getElementById('weatherAlertBox');
+      alertBox.style.display = 'flex';
+      document.getElementById('alertText').textContent = alertText;
+    }
+
+    // AI Assistant Chat Functions
+    function initializeChat() {
+      addChatMessage('ai', currentLang === 'en' ? 
+        'Hello! I am your Smart Farming Assistant. How can I help you today?' : 
+        'नमस्कार! मी तुमचा स्मार्ट शेती सहाय्यक आहे. आज मी तुम्हाला कशी मदत करू शकतो?');
+    }
+
+    function askAssistant() {
+      const question = document.getElementById("aiQuestion").value.trim();
+      if (!question) {
+        showNotification(currentLang === "en" ? "Please enter a question." : "कृपया प्रश्न टाका.", "warning");
+        return;
+      }
+      
+      addChatMessage('user', question);
+      document.getElementById('aiQuestion').value = '';
+      
+      // Show typing indicator
+      const typingId = addTypingIndicator();
+      
+      // Simulate AI processing
+      setTimeout(() => {
+        removeTypingIndicator(typingId);
+        const response = generateAIResponse(question);
+        addChatMessage('ai', response);
+      }, 1000);
+    }
+
+    function generateAIResponse(question) {
+      question = question.toLowerCase();
+      let response = '';
+      
+      // Enhanced response logic
+      if (question.includes('red rot')) {
+        response = currentLang === 'en' ?
+          `🚨 **Red Rot Management:**\n\n1. **Identification:** Look for reddish internal stem discoloration with foul smell\n2. **Immediate Action:** Remove and burn infected clumps\n3. **Prevention:** Use resistant varieties (Co 0238, Co 86032)\n4. **Treatment:** Apply Carbendazim (0.1%) as preventive spray\n5. **Cultural Practice:** Ensure proper drainage and avoid waterlogging` :
+          `🚨 **तांबेरा व्यवस्थापन:**\n\n1. **ओळख:** लाल रंगाचे आतील खोड बदल आणि दुर्गंधीचा शोध घ्या\n2. **तातडीची कारवाई:** संसर्गित झुडूप काढून जाळा\n3. **प्रतिबंध:** प्रतिरोधक जाती वापरा (Co 0238, Co 86032)\n4. **उपचार:** कार्बेंडाझिम (0.1%) प्रतिबंधक स्प्रे म्हणून वापरा\n5. **सांस्कृतिक पद्धत:** योग्य निचरा सुनिश्चित करा आणि पाणथळ टाळा`;
+      } else if (question.includes('irrigation')) {
+        response = currentLang === 'en' ?
+          `💧 **Smart Irrigation Schedule:**\n\n• **Germination Phase:** Light irrigation every 3 days\n• **Tillering Phase:** Moderate irrigation every 5 days\n• **Grand Growth:** Heavy irrigation every 7-10 days\n• **Maturity:** Reduce irrigation gradually\n\n💡 **Tip:** Use drip irrigation to save 60-70% water` :
+          `💧 **स्मार्ट सिंचन वेळापत्रक:**\n\n• **अंकुरण टप्पा:** दर 3 दिवसांनी हलके सिंचन\n• **फुटवा टप्पा:** दर 5 दिवसांनी मध्यम सिंचन\n• **जलद वाढ:** दर 7-10 दिवसांनी जास्त सिंचन\n• **परिपक्वता:** हळूहळू सिंचन कमी करा\n\n💡 **टीप:** 60-70% पाणी वाचवण्यासाठी ठिबक सिंचन वापरा`;
+      } else if (question.includes('fertilizer')) {
+        response = currentLang === 'en' ?
+          `🧪 **Fertilizer Schedule for Sugarcane:**\n\n• **Basal Dose:** 100:60:40 kg/ha of NPK\n• **Top Dressing:** 50 kg N at 30 DAP\n• **Second Dose:** 50 kg N at 60 DAP\n• **Micronutrients:** Zinc sulphate @ 25 kg/ha\n\n📊 **Organic Alternative:** 10-12 tons FYM/ha` :
+          `🧪 **ऊसासाठी खत वेळापत्रक:**\n\n• **बेसल डोस:** 100:60:40 kg/ha NPK\n• **टॉप ड्रेसिंग:** 30 DAP वर 50 kg N\n• **दुसरी डोस:** 60 DAP वर 50 kg N\n• **सूक्ष्म पोषक तत्व:** जस्त सल्फेट @ 25 kg/ha\n\n📊 **सेंद्रिय पर्याय:** 10-12 टन FYM/हेक्टर`;
+      } else if (question.includes('yield')) {
+        response = currentLang === 'en' ?
+          `📈 **Yield Enhancement Strategies:**\n\n1. **Variety Selection:** Use high-yielding varieties (Co 86032, Co 0238)\n2. **Planting Density:** 60,000-75,000 setts/ha\n3. **Nutrient Management:** Balanced NPK with micronutrients\n4. **Water Management:** Optimize irrigation scheduling\n5. **Pest Control:** Integrated Pest Management\n\n🎯 **Expected Yield:** 80-100 tons/ha with proper management` :
+          `📈 **उत्पादन वाढवण्याच्या धोरणां:**\n\n1. **जात निवड:** उच्च उत्पादन देणाऱ्या जाती वापरा (Co 86032, Co 0238)\n2. **लागवड घनता:** 60,000-75,000 बेणे/हेक्टर\n3. **पोषक व्यवस्थापन:** सूक्ष्म पोषकांसह संतुलित NPK\n4. **पाणी व्यवस्थापन:** सिंचन वेळापत्रक ऑप्टिमाइझ करा\n5. **कीटक नियंत्रण:** समन्वित कीटक व्यवस्थापन\n\n🎯 **अपेक्षित उत्पादन:** योग्य व्यवस्थापनासह 80-100 टन/हेक्टर`;
+      } else if (question.includes('weather')) {
+        response = currentLang === 'en' ?
+          `🌤️ **Current Weather Advisory:**\n\n• **Temperature:** Optimal for sugarcane growth\n• **Humidity:** Moderate (60-70%)\n• **Rainfall:** No significant rain expected\n• **Recommendation:** Proceed with scheduled irrigation` :
+          `🌤️ **सध्याचे हवामान सल्ला:**\n\n• **तापमान:** ऊस वाढीसाठी इष्टतम\n• **आर्द्रता:** मध्यम (60-70%)\n• **पाऊस:** लक्षणीय पाऊस अपेक्षित नाही\n• **शिफारस:** नियोजित सिंचन सुरू ठेवा`;
+      } else {
+        response = currentLang === 'en' ?
+          `🤖 I understand you're asking about: "${question}"\n\nFor specific farming advice, I recommend:\n1. Contacting your local Krishi Vigyan Kendra\n2. Consulting with agricultural experts\n3. Checking government agricultural portals\n\nYou can also ask me about:\n• Crop diseases and treatments\n• Irrigation schedules\n• Fertilizer recommendations\n• Market price trends\n• Government schemes` :
+          `🤖 मला समजले की आपण विचारत आहात: "${question}"\n\nविशिष्ट शेती सल्ल्यासाठी, मी शिफारस करतो:\n1. आपल्या स्थानिक कृषी विज्ञान केंद्राशी संपर्क साधा\n2. कृषी तज्ञांशी सल्लामसलत करा\n3. सरकारी कृषी पोर्टल तपासा\n\nआपण मला हे देखील विचारू शकता:\n• पिकाचे रोग आणि उपचार\n• सिंचन वेळापत्रक\n• खत शिफारसी\n• बाजार किंमत कल\n• सरकारी योजना`;
+      }
+      
+      return response;
+    }
+
+    function addChatMessage(sender, message) {
+      const chatWindow = document.getElementById('chatWindow');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+      chatWindow.appendChild(messageDiv);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      
+      // Store in history
+      chatHistory.push({ sender, message, timestamp: new Date() });
+    }
+
+    function addTypingIndicator() {
+      const chatWindow = document.getElementById('chatWindow');
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'message ai';
+      typingDiv.id = 'typingIndicator';
+      typingDiv.innerHTML = currentLang === 'en' ? 'Typing<span class="loading"></span>' : 'टाइप करत आहे<span class="loading"></span>';
+      chatWindow.appendChild(typingDiv);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      return 'typingIndicator';
+    }
+
+    function removeTypingIndicator(id) {
+      const element = document.getElementById(id);
+      if (element) element.remove();
+    }
+
+    function quickQuestion(type) {
+      const questions = {
+        'sugarcane price': currentLang === 'en' ? 'What is the current price of sugarcane?' : 'ऊसाची सध्याची किंमत किती आहे?',
+        'sugarcane diseases': currentLang === 'en' ? 'What are common sugarcane diseases?' : 'ऊसाचे सामान्य रोग कोणते आहेत?',
+        'fertilizer schedule': currentLang === 'en' ? 'What is the fertilizer schedule for sugarcane?' : 'ऊसासाठी खत वेळापत्रक काय आहे?',
+        'irrigation tips': currentLang === 'en' ? 'What are the best irrigation practices for sugarcane?' : 'ऊसासाठी सर्वोत्तम सिंचन पद्धती कोणत्या आहेत?'
+      };
+      
+      const question = questions[type] || type;
+      document.getElementById('aiQuestion').value = question;
+      askAssistant();
+    }
+
+    // Camera analysis
+    function previewImage(event) {
+      const preview = document.getElementById('cameraPreview');
+      const file = event.target.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--border-radius);">`;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function analyzeImage() {
+      const fileInput = document.getElementById("cropImage");
+      const resultBox = document.getElementById("analysisResult");
+      
+      if (!fileInput.files || fileInput.files.length === 0) {
+        resultBox.innerHTML = `<div class="alert alert-warning">
+          <span>❗</span>
+          <span>${currentLang === 'en' ? "Please upload a crop image." : "कृपया पिकाचे छायाचित्र अपलोड करा."}</span>
+        </div>`;
+        return;
+      }
+      
+      // Simulate AI processing
+      resultBox.innerHTML = `<div class="alert alert-warning">
+        <span>🔍</span>
+        <span>${currentLang === 'en' ? "Analyzing image..." : "छायाचित्र विश्लेषण करत आहे..."}</span>
+      </div>`;
+      
+      setTimeout(() => {
+        // Randomly select a detection result
+        const randomDetection = detectionDatabase[Math.floor(Math.random() * detectionDatabase.length)];
+        
+        const severityClass = `detection-severity-${randomDetection.severity}`;
+        const severityIcon = randomDetection.severity === 'low' ? '✅' : 
+                           randomDetection.severity === 'medium' ? '⚠️' : '🚨';
+        
+        const detectionText = currentLang === 'en' ? randomDetection.detection_en : randomDetection.detection_mr;
+        const recommendationText = currentLang === 'en' ? randomDetection.recommendation_en : randomDetection.recommendation_mr;
+        
+        resultBox.innerHTML = `
+          <div class="detection-item ${severityClass}">
+            <div class="detection-title">${severityIcon} ${randomDetection.name}</div>
+            <div class="detection-confidence">${currentLang === 'en' ? 'Confidence:' : 'आत्मविश्वास:'} ${randomDetection.confidence}%</div>
+            <div class="detection-recommendation">
+              <strong>${currentLang === 'en' ? 'Detection:' : 'शोध:'}</strong> ${detectionText}<br>
+              <strong>${currentLang === 'en' ? 'Recommendation:' : 'शिफारस:'}</strong> ${recommendationText}
+            </div>
+          </div>
+          <div class="alert alert-success">
+            <span>💡</span>
+            <span>${currentLang === 'en' ? 
+              "Based on this analysis, we recommend consulting with a local agriculture expert for field verification." :
+              "या विश्लेषणावर आधारित, आम्ही फील्ड सत्यापनासाठी स्थानिक कृषी तज्ञांचा सल्ला घेण्याची शिफारस करतो."}
+            </span>
+          </div>
+        `;
+      }, 2000);
+    }
+
+    function simulateCamera(source) {
+      const resultBox = document.getElementById("analysisResult");
+      resultBox.innerHTML = `<div class="alert alert-warning">
+        <span>📷</span>
+        <span>${currentLang === 'en' ? "Capturing image..." : "छायाचित्र घेत आहे..."}</span>
+      </div>`;
+      
+      setTimeout(() => {
+        analyzeImage();
+      }, 1500);
+    }
+
+    // Calculator functions from index.html
+    function calculateProfit() {
+      const area = parseFloat(document.getElementById('landArea').value) || 0;
+      const yieldVal = parseFloat(document.getElementById('expectedYield').value) || 0;
+      const price = parseFloat(document.getElementById('sellingPrice').value) || 3250;
+      const cost = parseFloat(document.getElementById('productionCost').value) || 60000;
+      
+      const totalRevenue = area * yieldVal * (price / 1000);
+      const totalCost = area * cost;
+      const profit = totalRevenue - totalCost;
+      const roi = (profit / totalCost) * 100;
+      
+      const result = currentLang === 'en' ?
+        `💰 <strong>Profit Calculation:</strong><br>
+         Total Revenue: ₹${totalRevenue.toLocaleString()}<br>
+         Total Cost: ₹${totalCost.toLocaleString()}<br>
+         <strong>Net Profit: ₹${profit.toLocaleString()}</strong><br>
+         ROI: ${roi.toFixed(1)}%` :
+        `💰 <strong>नफा गणना:</strong><br>
+         एकूण उत्पन्न: ₹${totalRevenue.toLocaleString()}<br>
+         एकूण खर्च: ₹${totalCost.toLocaleString()}<br>
+         <strong>निव्वळ नफा: ₹${profit.toLocaleString()}</strong><br>
+         ROI: ${roi.toFixed(1)}%`;
+      
+      document.getElementById('profitResult').innerHTML = result;
+    }
+
+    function calculateFertilizer() {
+      const area = parseFloat(document.getElementById('fertilizerArea').value) || 0;
+      const type = document.getElementById('fertilizerType').value;
+      
+      const recommendations = {
+        'urea': { rate: 100, unit: 'kg/acre', desc: currentLang === 'en' ? 'Nitrogen for growth' : 'वाढीसाठी नत्र' },
+        'dap': { rate: 50, unit: 'kg/acre', desc: currentLang === 'en' ? 'Phosphorus for roots' : 'मुळांसाठी स्फुरद' },
+        'mop': { rate: 40, unit: 'kg/acre', desc: currentLang === 'en' ? 'Potassium for quality' : 'गुणवत्तेसाठी पालाश' },
+        'complex': { rate: 80, unit: 'kg/acre', desc: currentLang === 'en' ? 'Balanced nutrition' : 'संतुलित पोषण' }
+      };
+      
+      const rec = recommendations[type];
+      const total = area * rec.rate;
+      
+      const result = currentLang === 'en' ?
+        `🧪 <strong>Fertilizer Requirement:</strong><br>
+         Type: ${type.toUpperCase()}<br>
+         Rate: ${rec.rate} ${rec.unit}<br>
+         <strong>Total Required: ${total} kg</strong><br>
+         Purpose: ${rec.desc}` :
+        `🧪 <strong>खत आवश्यकता:</strong><br>
+         प्रकार: ${type.toUpperCase()}<br>
+         दर: ${rec.rate} ${rec.unit}<br>
+         <strong>एकूण आवश्यक: ${total} kg</strong><br>
+         उद्देश: ${rec.desc}`;
+      
+      document.getElementById('fertilizerResult').innerHTML = result;
+    }
+
+    function calculateWater() {
+      const area = parseFloat(document.getElementById('waterArea').value) || 0;
+      const stage = document.getElementById('cropStage').value;
+      
+      const waterRequirements = {
+        'initial': { rate: 500, unit: currentLang === 'en' ? 'liters/acre/day' : 'लिटर/एकर/दिवस', desc: currentLang === 'en' ? 'Light irrigation' : 'हलके सिंचन' },
+        'development': { rate: 800, unit: currentLang === 'en' ? 'liters/acre/day' : 'लिटर/एकर/दिवस', desc: currentLang === 'en' ? 'Moderate irrigation' : 'मध्यम सिंचन' },
+        'mid': { rate: 1200, unit: currentLang === 'en' ? 'liters/acre/day' : 'लिटर/एकर/दिवस', desc: currentLang === 'en' ? 'Heavy irrigation' : 'जास्त सिंचन' },
+        'late': { rate: 600, unit: currentLang === 'en' ? 'liters/acre/day' : 'लिटर/एकर/दिवस', desc: currentLang === 'en' ? 'Reduce before harvest' : 'कापणीपूर्वी कमी करा' }
+      };
+      
+      const req = waterRequirements[stage];
+      const total = area * req.rate;
+      
+      const result = currentLang === 'en' ?
+        `💧 <strong>Water Requirement:</strong><br>
+         Crop Stage: ${stage}<br>
+         Rate: ${req.rate} ${req.unit}<br>
+         <strong>Total Required: ${total.toLocaleString()} liters/day</strong><br>
+         Note: ${req.desc}` :
+        `💧 <strong>पाणी आवश्यकता:</strong><br>
+         पीक टप्पा: ${stage}<br>
+         दर: ${req.rate} ${req.unit}<br>
+         <strong>एकूण आवश्यक: ${total.toLocaleString()} लिटर/दिवस</strong><br>
+         सूचना: ${req.desc}`;
+      
+      document.getElementById('waterResult').innerHTML = result;
+    }
+
+    // Community features
+    function postQuestion() {
+      const question = document.getElementById('newQuestion').value;
+      if (!question) return;
+      
+      const postsContainer = document.getElementById('communityPosts');
+      const newPost = document.createElement('div');
+      newPost.className = 'community-post';
+      newPost.innerHTML = `
+        <div class="community-post-header">
+          <span class="post-author">${currentLang === 'en' ? 'You' : 'तुम्ही'}</span>
+          <span class="post-time">${currentLang === 'en' ? 'Just now' : 'आत्ताच'}</span>
+        </div>
+        <p>${question}</p>
+      `;
+      
+      postsContainer.prepend(newPost);
+      document.getElementById('newQuestion').value = '';
+      
+      // Simulate expert response after delay
+      setTimeout(() => {
+        const response = document.createElement('div');
+        response.className = 'community-post';
+        response.style.marginLeft = '20px';
+        response.style.background = '#f8f9fa';
+        response.innerHTML = `
+          <div class="community-post-header">
+            <span class="post-author">${currentLang === 'en' ? 'Expert' : 'तज्ञ'}</span>
+            <span class="post-time">${currentLang === 'en' ? '2 minutes ago' : '2 मिनिटांपूर्वी'}</span>
+          </div>
+          <p>${currentLang === 'en' ? 
+            "Thank you for your question! Our agriculture experts will respond shortly. In the meantime, you might find helpful information in our AI Assistant section." :
+            "तुमच्या प्रश्नाबद्दल धन्यवाद! आमचे कृषी तज्ञ लवकरच प्रतिसाद देतील. दरम्यान, तुम्हाला आमच्या AI सहाय्यक विभागात उपयुक्त माहिती सापडू शकते."}
+          </p>
+        `;
+        newPost.appendChild(response);
+      }, 3000);
+    }
+
+    // Marketplace features
+    function contactSeller(seller) {
+      showNotification(currentLang === 'en' ? 
+        `Contacting ${seller}...\nPhone: 9XXXX XXXXX\n(Simulated contact)` :
+        `${seller} शी संपर्क साधत आहे...\nफोन: 9XXXX XXXXX\n(सिम्युलेटेड संपर्क)`);
+    }
+
+    function listYourCrop() {
+      const type = document.getElementById('cropType').value;
+      const quantity = document.getElementById('cropQuantity').value;
+      const price = document.getElementById('cropPrice').value;
+      
+      if (!type || !quantity || !price) {
+        showNotification(currentLang === 'en' ? "Please fill all fields" : "कृपया सर्व फील्ड भरा", "warning");
+        return;
+      }
+      
+      showNotification(currentLang === 'en' ?
+        `Your ${type} crop (${quantity} kg) listed at ₹${price}/quintal!\nBuyers can now contact you.` :
+        `तुमचे ${type} पीक (${quantity} kg) ₹${price}/क्विंटल दराने सूचीबद्ध केले!\nआता खरेदीदार तुमच्याशी संपर्क साधू शकतात.`);
+      
+      document.getElementById('sellForm').reset();
+    }
+
+    // Application functions
+    function applyScheme(scheme) {
+      showNotification(currentLang === 'en' ?
+        `Applying for ${scheme}...\nRedirecting to application form.` :
+        `${scheme} साठी अर्ज करत आहे...\nअर्ज फॉर्मवर पुनर्निर्देशित करत आहे.`);
+    }
+
+    function applyLoan(loan) {
+      showNotification(currentLang === 'en' ?
+        `Applying for ${loan}...\nPlease have your documents ready.` :
+        `${loan} साठी अर्ज करत आहे...\nकृपया आपली कागदपत्रे तयार ठेवा.`);
+    }
+
+    function contactStorage(storage) {
+      showNotification(currentLang === 'en' ?
+        `Contacting ${storage}...\nPhone: 1-800-STORAGE\n(Simulated booking)` :
+        `${storage} शी संपर्क साधत आहे...\nफोन: 1-800-STORAGE\n(सिम्युलेटेड बुकिंग)`);
+    }
+
+    function contactLogistics(logistics) {
+      showNotification(currentLang === 'en' ?
+        `Contacting ${logistics}...\nPhone: 1-800-LOGISTICS\n(Simulated booking)` :
+        `${logistics} शी संपर्क साधत आहे...\nफोन: 1-800-LOGISTICS\n(सिम्युलेटेड बुकिंग)`);
+    }
+
+    function addCustomTask() {
+      const task = document.getElementById('customTask').value;
+      const date = document.getElementById('taskDate').value;
+      
+      if (!task) return;
+      
+      showNotification(currentLang === 'en' ?
+        `Task "${task}" added to your planner!` :
+        `कार्य "${task}" आपल्या नियोजकात जोडले!`);
+      
+      document.getElementById('customTask').value = '';
+      document.getElementById('taskDate').value = '';
+    }
+
+    // NEW FEATURE FUNCTIONS
+    
+    function scheduleSoilTest() {
+      const dateInput = document.getElementById('soilTestDate');
+      if (dateInput.value) {
+        showNotification(currentLang === 'en' ?
+          `Soil test scheduled for ${dateInput.value}. Our representative will contact you.` :
+          `माती चाचणी ${dateInput.value} साठी नियोजित केली आहे. आमचा प्रतिनिधी तुमच्याशी संपर्क साधेल.`);
+        dateInput.value = '';
+      } else {
+        showNotification(currentLang === 'en' ? 'Please select a date for soil testing.' : 'कृपया माती चाचणीसाठी तारीख निवडा.', 'warning');
+      }
+    }
+
+    function setRotationReminder() {
+      showNotification(currentLang === 'en' ? 
+        'Reminder set for crop rotation in December 2024' : 
+        'डिसेंबर 2024 मधील पीक फेरफारासाठी रिमाइंडर सेट केला');
+    }
+
+    function modifyIrrigationSchedule() {
+      showNotification(currentLang === 'en' ? 
+        'Irrigation schedule modification panel opened' : 
+        'सिंचन वेळापत्रक सुधारणा पॅनेल उघडले');
+    }
+
+    function irrigateZone(zone) {
+      showNotification(currentLang === 'en' ? 
+        `Starting irrigation for ${zone}` : 
+        `${zone} साठी सिंचन सुरू करत आहे`);
+    }
+
+    function scheduleIrrigation(zone) {
+      showNotification(currentLang === 'en' ? 
+        `Opening schedule panel for ${zone}` : 
+        `${zone} साठी वेळापत्रक पॅनेल उघडत आहे`);
+    }
+
+    // Equipment Rental functions
+    function rentEquipment(equipment) {
+      showNotification(currentLang === 'en' ? 
+        `Booking ${equipment}. Our representative will contact you for confirmation.` : 
+        `${equipment} बुक करत आहे. पुष्टीकरणासाठी आमचा प्रतिनिधी तुमच्याशी संपर्क साधेल.`);
+    }
+
+    function cancelBooking(equipment) {
+      showNotification(currentLang === 'en' ? 
+        `Cancelling booking for ${equipment}` : 
+        `${equipment} साठी बुकिंग रद्द करत आहे`);
+    }
+
+    // Digital Payments functions
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.getElementById('selectedMethod').textContent = currentLang === 'en' ? `Payment Method: ${method}` : `पेमेंट पद्धत: ${method}`;
+      document.getElementById('paymentForm').style.display = 'block';
+    }
+
+    function processPayment() {
+      const amount = document.getElementById('paymentAmount').value;
+      const details = document.getElementById('paymentDetails').value;
+      
+      if (!amount || !details) {
+        showNotification(currentLang === 'en' ? 'Please fill all payment details' : 'कृपया सर्व पेमेंट तपशील भरा', 'warning');
+        return;
+      }
+      
+      showNotification(currentLang === 'en' ? 
+        `Payment of ₹${amount} for ${details} via ${selectedPaymentMethod} processed successfully!` :
+        `₹${amount} चे पेमेंट ${details} साठी ${selectedPaymentMethod} द्वारे यशस्वीरित्या प्रक्रिया केले!`);
+      document.getElementById('paymentForm').style.display = 'none';
+      document.getElementById('paymentAmount').value = '';
+      document.getElementById('paymentDetails').value = '';
+    }
+
+    // Farm Diary functions
+    function addDiaryEntry() {
+      const date = document.getElementById('diaryDate').value;
+      const entry = document.getElementById('diaryEntry').value;
+      
+      if (!date || !entry) {
+        showNotification(currentLang === 'en' ? 'Please fill both date and diary entry' : 'कृपया दोन्ही तारीख आणि डायरी एंट्री भरा', 'warning');
+        return;
+      }
+      
+      const diaryEntries = document.getElementById('diaryEntries');
+      const newEntry = document.createElement('div');
+      newEntry.className = 'diary-entry';
+      
+      const dateObj = new Date(date);
+      const formattedDate = dateObj.toLocaleDateString(currentLang === 'en' ? 'en-US' : 'mr-IN', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      newEntry.innerHTML = `
+        <div class="diary-date">${formattedDate}</div>
+        <div class="diary-content">${entry}</div>
+      `;
+      
+      diaryEntries.prepend(newEntry);
+      document.getElementById('diaryDate').value = '';
+      document.getElementById('diaryEntry').value = '';
+      
+      showNotification(currentLang === 'en' ? 'Diary entry added successfully!' : 'डायरी एंट्री यशस्वीरित्या जोडली!');
+    }
+
+    // Training functions
+    function enrollTraining(course) {
+      showNotification(currentLang === 'en' ? 
+        `Enrolled in ${course} training course! You will receive course materials shortly.` :
+        `${course} प्रशिक्षण अभ्यासक्रमात नोंदणी केली! तुम्हाला लवकरच अभ्यासक्रम साहित्य मिळेल.`);
+    }
+
+    function continueTraining(course) {
+      showNotification(currentLang === 'en' ? 
+        `Continuing ${course} training course` :
+        `${course} प्रशिक्षण अभ्यासक्रम चालू ठेवत आहे`);
+    }
+
+    // Login and Registration Functions
+    // Toggle between login and registration forms
+    document.getElementById('registerLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('loginForm').parentElement.style.display = 'none';
+      document.getElementById('registrationContainer').style.display = 'block';
+    });
+
+    document.getElementById('loginLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('registrationContainer').style.display = 'none';
+      document.getElementById('loginForm').parentElement.style.display = 'block';
+    });
+
+    // Form validation and submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // Simple validation
+      let isValid = true;
+      
+      if (!username) {
+        document.getElementById('usernameError').textContent = currentLang === 'en' ? 
+          'Please enter your username or phone number' : 
+          'कृपया आपले वापरकर्तानाव किंवा फोन नंबर टाका';
+        document.getElementById('usernameError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('usernameError').style.display = 'none';
+      }
+      
+      if (!password) {
+        document.getElementById('passwordError').textContent = currentLang === 'en' ? 
+          'Please enter your password' : 
+          'कृपया आपला पासवर्ड टाका';
+        document.getElementById('passwordError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('passwordError').style.display = 'none';
+      }
+      
+      if (isValid) {
+        simulateLogin(username, password);
+      }
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fullName = document.getElementById('fullName').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const location = document.getElementById('location').value;
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validation
+      let isValid = true;
+      
+      if (!fullName) {
+        document.getElementById('fullNameError').textContent = currentLang === 'en' ? 
+          'Please enter your full name' : 
+          'कृपया आपले पूर्ण नाव टाका';
+        document.getElementById('fullNameError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('fullNameError').style.display = 'none';
+      }
+      
+      if (!phone) {
+        document.getElementById('phoneError').textContent = currentLang === 'en' ? 
+          'Please enter your phone number' : 
+          'कृपया आपला फोन नंबर टाका';
+        document.getElementById('phoneError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('phoneError').style.display = 'none';
+      }
+      
+      if (!location) {
+        document.getElementById('locationError').textContent = currentLang === 'en' ? 
+          'Please enter your location' : 
+          'कृपया आपले स्थान टाका';
+        document.getElementById('locationError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('locationError').style.display = 'none';
+      }
+      
+      if (!password) {
+        document.getElementById('regPasswordError').textContent = currentLang === 'en' ? 
+          'Please enter a password' : 
+          'कृपया पासवर्ड टाका';
+        document.getElementById('regPasswordError').style.display = 'block';
+        isValid = false;
+      } else if (password.length < 6) {
+        document.getElementById('regPasswordError').textContent = currentLang === 'en' ? 
+          'Password must be at least 6 characters' : 
+          'पासवर्ड किमान 6 वर्णांचा असावा';
+        document.getElementById('regPasswordError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('regPasswordError').style.display = 'none';
+      }
+      
+      if (!confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = currentLang === 'en' ? 
+          'Please confirm your password' : 
+          'कृपया आपल्या पासवर्डची पुष्टी करा';
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        isValid = false;
+      } else if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = currentLang === 'en' ? 
+          'Passwords do not match' : 
+          'पासवर्ड जुळत नाहीत';
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('confirmPasswordError').style.display = 'none';
+      }
+      
+      if (isValid) {
+        simulateRegistration(fullName, phone, email, location, password);
+      }
+    });
+
+    // Simulate login
+    function simulateLogin(username, password) {
+      // Show loading state
+      const loginButton = document.getElementById('loginButton');
+      const originalText = loginButton.textContent;
+      loginButton.textContent = currentLang === 'en' ? 'Logging in...' : 'लॉगिन करत आहे...';
+      loginButton.disabled = true;
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        // For demo, always succeed
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('username', username);
+        
+        // Show the app and hide the login page
+        checkLoginStatus();
+      }, 1500);
+    }
+
+    // Simulate registration
+    function simulateRegistration(fullName, phone, email, location, password) {
+      // Show loading state
+      const registerButton = document.getElementById('registerButton');
+      const originalText = registerButton.textContent;
+      registerButton.textContent = currentLang === 'en' ? 'Creating account...' : 'खाते तयार करत आहे...';
+      registerButton.disabled = true;
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        // For demo, always succeed
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('username', fullName);
+        
+        // Show success message
+        showNotification(currentLang === 'en' ? 
+          'Account created successfully! Redirecting to application...' : 
+          'खाते यशस्वीरित्या तयार केले! अनुप्रयोगाकडे पुनर्निर्देशित करत आहे...');
+        
+        // Show the app and hide the registration page
+        checkLoginStatus();
+      }, 2000);
+    }
+
+    // Utility function to show notifications
+    function showNotification(message, type = 'info') {
+      // Create notification
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type}`;
+      notification.style.position = 'fixed';
+      notification.style.top = '20px';
+      notification.style.right = '20px';
+      notification.style.zIndex = '1000';
+      notification.style.maxWidth = '300px';
+      notification.innerHTML = `📢 ${message}`;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Initialize the application
+    window.onload = function() {
+      // Set up language
+      updateUI(currentLang);
+      
+      // Check login status
+      checkLoginStatus();
+    };
+  </script>
+</body>
+</html>
